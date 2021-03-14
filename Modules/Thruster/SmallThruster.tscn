@@ -8,7 +8,7 @@
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="CollisionBoxes" index="0"]
-polygon = PoolVector2Array( 25, 0, 12.5, 25, -12.5, 25, -25, 0, 0, 0, 0, 0 )
+polygon = PoolVector2Array( 12.5, 0, 25, 25, -25, 25, -12.5, 0, 0, 0, 0, 0 )
 
 [node name="Connector" type="Position2D" parent="Connections" index="0"]
 script = ExtResource( 3 )
