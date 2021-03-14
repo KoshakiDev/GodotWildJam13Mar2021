@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Obstacles/Platform.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Entities/Player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Levels/RigidBody2D.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 30, 10 )
+
+[node name="DebugLevel" type="Node2D"]
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="Platform" parent="Platforms" instance=ExtResource( 1 )]
+position = Vector2( 328.43, 197.959 )
+
+[node name="Platform2" parent="Platforms" instance=ExtResource( 1 )]
+position = Vector2( 970.699, 205.204 )
+
+[node name="Platform3" parent="Platforms" instance=ExtResource( 1 )]
+position = Vector2( 1278.25, 229.898 )
+
+[node name="Platform4" parent="Platforms" instance=ExtResource( 1 )]
+position = Vector2( 1617.24, 427.452 )
+
+[node name="Platform7" parent="Platforms" instance=ExtResource( 1 )]
+position = Vector2( 1136.82, 452.146 )
+
+[node name="Platform8" parent="Platforms" instance=ExtResource( 1 )]
+position = Vector2( 788.861, 481.33 )
+
+[node name="Platform9" parent="Platforms" instance=ExtResource( 1 )]
+position = Vector2( 303.243, 701.842 )
+
+[node name="Platform10" parent="Platforms" instance=ExtResource( 1 )]
+position = Vector2( 957.23, 932.56 )
+
+[node name="Platform11" parent="Platforms" instance=ExtResource( 1 )]
+position = Vector2( 1597.03, 1161.54 )
+
+[node name="Platform5" parent="Platforms" instance=ExtResource( 1 )]
+position = Vector2( 1922.55, 312.961 )
+rotation = 1.56173
+
+[node name="Platform12" parent="Platforms" instance=ExtResource( 1 )]
+position = Vector2( 1929.28, 885.416 )
+rotation = 1.56173
+
+[node name="Platform13" parent="Platforms" instance=ExtResource( 1 )]
+position = Vector2( 21.0966, 939.294 )
+rotation = 1.56173
+
+[node name="Platform14" parent="Platforms" instance=ExtResource( 1 )]
+position = Vector2( 665.39, 1271.54 )
+rotation = 1.56173
+
+[node name="Platform6" parent="Platforms" instance=ExtResource( 1 )]
+position = Vector2( 18.8518, 292.756 )
+rotation = 1.56173
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 255.943, -44.3199 )
+mass = 0.5
+gravity_scale = 3.0
+
+[node name="RigidBody2D" type="RigidBody2D" parent="Player"]
+script = ExtResource( 3 )
+
+[node name="Tween" type="Tween" parent="Player/RigidBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/RigidBody2D"]
+position = Vector2( -0.841843, 64.8222 )
+shape = SubResource( 1 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="Player"]
+node_a = NodePath("..")
+node_b = NodePath("../RigidBody2D")
+
+[connection signal="tween_completed" from="Player/RigidBody2D/Tween" to="Player/RigidBody2D" method="_on_Tween_tween_completed"]

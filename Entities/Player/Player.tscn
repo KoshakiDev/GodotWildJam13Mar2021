@@ -1,0 +1,127 @@
+[gd_scene load_steps=33 format=2]
+
+[ext_resource path="res://Modules/Head/PlayerHead.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Entities/Player/Player.gd" type="Script" id=2]
+[ext_resource path="res://Modules/ModuleManager.gd" type="Script" id=3]
+
+[sub_resource type="AnimationNodeAnimation" id=4]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "Jump"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "Pull"
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "Push"
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "Roll"
+
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "Walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=10]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=11]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=21]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=23]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=24]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachine" id=25]
+states/Idle/node = SubResource( 4 )
+states/Idle/position = Vector2( 233, 95 )
+states/Jump/node = SubResource( 5 )
+states/Jump/position = Vector2( 233, 256 )
+states/Pull/node = SubResource( 6 )
+states/Pull/position = Vector2( 520, 95 )
+states/Push/node = SubResource( 7 )
+states/Push/position = Vector2( -73, 399 )
+states/Roll/node = SubResource( 8 )
+states/Roll/position = Vector2( -73, 95 )
+states/Walk/node = SubResource( 9 )
+states/Walk/position = Vector2( 520, 399 )
+transitions = [ "Idle", "Roll", SubResource( 10 ), "Roll", "Idle", SubResource( 11 ), "Idle", "Walk", SubResource( 12 ), "Walk", "Idle", SubResource( 13 ), "Idle", "Jump", SubResource( 14 ), "Jump", "Idle", SubResource( 15 ), "Walk", "Jump", SubResource( 16 ), "Roll", "Jump", SubResource( 17 ), "Pull", "Idle", SubResource( 18 ), "Idle", "Pull", SubResource( 19 ), "Walk", "Pull", SubResource( 20 ), "Idle", "Push", SubResource( 21 ), "Walk", "Push", SubResource( 22 ), "Roll", "Push", SubResource( 23 ), "Push", "Idle", SubResource( 24 ) ]
+graph_offset = Vector2( -292.956, 15 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=26]
+
+[sub_resource type="Animation" id=27]
+resource_name = "Idle"
+
+[sub_resource type="Animation" id=28]
+resource_name = "Jump"
+
+[sub_resource type="Animation" id=29]
+resource_name = "Pull"
+
+[sub_resource type="Animation" id=30]
+resource_name = "Push"
+
+[sub_resource type="Animation" id=31]
+resource_name = "Roll"
+
+[sub_resource type="Animation" id=32]
+resource_name = "Walk"
+
+[node name="Player" type="RigidBody2D"]
+script = ExtResource( 2 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 25 )
+anim_player = NodePath("AnimationPlayer")
+parameters/playback = SubResource( 26 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationTree"]
+anims/Idle = SubResource( 27 )
+anims/Jump = SubResource( 28 )
+anims/Pull = SubResource( 29 )
+anims/Push = SubResource( 30 )
+anims/Roll = SubResource( 31 )
+anims/Walk = SubResource( 32 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+limit_left = 0
+limit_top = 0
+smoothing_enabled = true
+smoothing_speed = 8.0
+
+[node name="ModuleManager" type="Node2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="PlayerHead" parent="ModuleManager" instance=ExtResource( 1 )]
