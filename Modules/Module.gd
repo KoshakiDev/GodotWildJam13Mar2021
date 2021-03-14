@@ -10,17 +10,23 @@ var connected_modules := {}
 var colldider_positions := []
 var colldider_rotations := []
 
-onready var connections := $Connections
+
+onready var connections := $Connections.get_children()
 onready var colliders := $CollisionBoxes.get_children()
 
 
 func _ready():
-	# Add all the collision boxes from the module to the player (/owner).
+	# Check if the owner is a CollisionObject2D, as colliders are added.
+	# get_parent is used, as the module doesn't necessarily have an owner when
+	# entering the tree (always has a parent when in the tree).
 	if not get_parent().owner is CollisionObject2D:
 		print("The onwer of the module is not a CollisionObject2D, therefore it can not use the colliders.")
 		return
+	
+	# Add all the collision boxes from the module to the player (/the owner).
 	for i in range(colliders.size()):
 		var collider = colliders[i]
+		# Only add actual Colliders to the parent, no clutter.
 		if collider is CollisionShape2D or collider is CollisionPolygon2D:
 			# Save the initial position (offset to origin).
 			colldider_positions.append(collider.position)
@@ -37,17 +43,22 @@ func _exit_tree():
 # Returns the first match for a connector with the specified direction.
 # Returns null if none are found.
 func get_connector_in(direction: Vector2) -> Connector:
-	for connector in connections.get_children():
+	for connector in connections:
 		if connector.direction == direction:
 			return connector
 	return null
 
-# Returns true if two connectors can connect to each other.
-# (They are able to connect, if the are opposite of each other).
-func can_connect(connector: Connector, other_connector: Connector) -> bool:
-	return true
+# Returns true if a connector from this module and another connector can connect
+# to each other.
+func can_connect(own_connector: Connector, other_connector: Connector) -> bool:
+	return not connected_modules.has(own_connector) and own_connector.can_connect(other_connector)
 
+# Connects another module to this one, at connector (needs to be present in this
+# module) and other_connector (needs to be present in other_module).
+# Rotates and positions the other_module according to the connectors.
 func connect_module(other_module: Module, connector: Connector, other_connector: Connector) -> void:
+	assert(connector in connections)
+	assert(other_connector in other_module.connections)
 	if can_connect(connector, connector):
 		# Set the position of the other module to connect the two points (the other
 		# module will be repositioned, not this one).
