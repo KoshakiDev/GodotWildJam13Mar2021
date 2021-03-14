@@ -1,38 +1,47 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://Modules/Head/PlayerHead.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Entities/Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://Modules/ModuleManager.gd" type="Script" id=3]
+[ext_resource path="res://Modules/Thruster/SmallThruster.tscn" type="PackedScene" id=4]
 
-[sub_resource type="AnimationNodeAnimation" id=4]
+[sub_resource type="AnimationNodeAnimation" id=1]
 animation = "Idle"
 
-[sub_resource type="AnimationNodeAnimation" id=5]
+[sub_resource type="AnimationNodeAnimation" id=2]
 animation = "Jump"
 
-[sub_resource type="AnimationNodeAnimation" id=6]
+[sub_resource type="AnimationNodeAnimation" id=3]
 animation = "Pull"
 
-[sub_resource type="AnimationNodeAnimation" id=7]
+[sub_resource type="AnimationNodeAnimation" id=4]
 animation = "Push"
 
-[sub_resource type="AnimationNodeAnimation" id=8]
+[sub_resource type="AnimationNodeAnimation" id=5]
 animation = "Roll"
 
-[sub_resource type="AnimationNodeAnimation" id=9]
+[sub_resource type="AnimationNodeAnimation" id=6]
 animation = "Walk"
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=7]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=8]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=9]
+
 [sub_resource type="AnimationNodeStateMachineTransition" id=10]
+switch_mode = 2
+auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=11]
-switch_mode = 2
-auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=12]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=13]
 switch_mode = 2
 auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=14]
 
@@ -45,74 +54,66 @@ auto_advance = true
 [sub_resource type="AnimationNodeStateMachineTransition" id=17]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=18]
-switch_mode = 2
-auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=19]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=20]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=21]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=22]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=23]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=24]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachine" id=25]
-states/Idle/node = SubResource( 4 )
+[sub_resource type="AnimationNodeStateMachine" id=22]
+states/Idle/node = SubResource( 1 )
 states/Idle/position = Vector2( 233, 95 )
-states/Jump/node = SubResource( 5 )
+states/Jump/node = SubResource( 2 )
 states/Jump/position = Vector2( 233, 256 )
-states/Pull/node = SubResource( 6 )
+states/Pull/node = SubResource( 3 )
 states/Pull/position = Vector2( 520, 95 )
-states/Push/node = SubResource( 7 )
+states/Push/node = SubResource( 4 )
 states/Push/position = Vector2( -73, 399 )
-states/Roll/node = SubResource( 8 )
+states/Roll/node = SubResource( 5 )
 states/Roll/position = Vector2( -73, 95 )
-states/Walk/node = SubResource( 9 )
+states/Walk/node = SubResource( 6 )
 states/Walk/position = Vector2( 520, 399 )
-transitions = [ "Idle", "Roll", SubResource( 10 ), "Roll", "Idle", SubResource( 11 ), "Idle", "Walk", SubResource( 12 ), "Walk", "Idle", SubResource( 13 ), "Idle", "Jump", SubResource( 14 ), "Jump", "Idle", SubResource( 15 ), "Walk", "Jump", SubResource( 16 ), "Roll", "Jump", SubResource( 17 ), "Pull", "Idle", SubResource( 18 ), "Idle", "Pull", SubResource( 19 ), "Walk", "Pull", SubResource( 20 ), "Idle", "Push", SubResource( 21 ), "Walk", "Push", SubResource( 22 ), "Roll", "Push", SubResource( 23 ), "Push", "Idle", SubResource( 24 ) ]
+transitions = [ "Idle", "Roll", SubResource( 7 ), "Roll", "Idle", SubResource( 8 ), "Idle", "Walk", SubResource( 9 ), "Walk", "Idle", SubResource( 10 ), "Idle", "Jump", SubResource( 11 ), "Jump", "Idle", SubResource( 12 ), "Walk", "Jump", SubResource( 13 ), "Roll", "Jump", SubResource( 14 ), "Pull", "Idle", SubResource( 15 ), "Idle", "Pull", SubResource( 16 ), "Walk", "Pull", SubResource( 17 ), "Idle", "Push", SubResource( 18 ), "Walk", "Push", SubResource( 19 ), "Roll", "Push", SubResource( 20 ), "Push", "Idle", SubResource( 21 ) ]
 graph_offset = Vector2( -292.956, 15 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=26]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=23]
 
-[sub_resource type="Animation" id=27]
+[sub_resource type="Animation" id=24]
 resource_name = "Idle"
 
-[sub_resource type="Animation" id=28]
+[sub_resource type="Animation" id=25]
 resource_name = "Jump"
 
-[sub_resource type="Animation" id=29]
+[sub_resource type="Animation" id=26]
 resource_name = "Pull"
 
-[sub_resource type="Animation" id=30]
+[sub_resource type="Animation" id=27]
 resource_name = "Push"
 
-[sub_resource type="Animation" id=31]
+[sub_resource type="Animation" id=28]
 resource_name = "Roll"
 
-[sub_resource type="Animation" id=32]
+[sub_resource type="Animation" id=29]
 resource_name = "Walk"
 
 [node name="Player" type="RigidBody2D"]
 script = ExtResource( 2 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 25 )
+tree_root = SubResource( 22 )
 anim_player = NodePath("AnimationPlayer")
-parameters/playback = SubResource( 26 )
+parameters/playback = SubResource( 23 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationTree"]
-anims/Idle = SubResource( 27 )
-anims/Jump = SubResource( 28 )
-anims/Pull = SubResource( 29 )
-anims/Push = SubResource( 30 )
-anims/Roll = SubResource( 31 )
-anims/Walk = SubResource( 32 )
+anims/Idle = SubResource( 24 )
+anims/Jump = SubResource( 25 )
+anims/Pull = SubResource( 26 )
+anims/Push = SubResource( 27 )
+anims/Roll = SubResource( 28 )
+anims/Walk = SubResource( 29 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
@@ -125,3 +126,5 @@ smoothing_speed = 8.0
 script = ExtResource( 3 )
 
 [node name="PlayerHead" parent="ModuleManager" instance=ExtResource( 1 )]
+
+[node name="Thruster" parent="ModuleManager" instance=ExtResource( 4 )]
