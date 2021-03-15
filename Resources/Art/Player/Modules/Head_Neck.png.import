@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Head_Neck.png-22a884996c395cdb3f5657a23a708d3a.stex"
+path="res://.import/Head_Neck.png-e9c2b431857c0a0ae40e36a5b2d65ee6.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Player/Modules/Head_Neck.png"
-dest_files=[ "res://.import/Head_Neck.png-22a884996c395cdb3f5657a23a708d3a.stex" ]
+source_file="res://Resources/Art/Player/Modules/Head_Neck.png"
+dest_files=[ "res://.import/Head_Neck.png-e9c2b431857c0a0ae40e36a5b2d65ee6.stex" ]
 
 [params]
 

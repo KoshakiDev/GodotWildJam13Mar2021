@@ -9,30 +9,30 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Position2D",
+"base": "Reference",
 "class": "Connector",
 "language": "GDScript",
-"path": "res://Modules/Connector.gd"
+"path": "res://Source/Modules/Connector.gd"
 }, {
-"base": "Control",
+"base": "Reference",
 "class": "HUD",
 "language": "GDScript",
-"path": "res://HUD/HUD.gd"
+"path": "res://Source/HUD/HUD.gd"
 }, {
-"base": "Node2D",
+"base": "Reference",
 "class": "Module",
 "language": "GDScript",
-"path": "res://Modules/Module.gd"
+"path": "res://Source/Modules/Module.gd"
 }, {
-"base": "Node2D",
+"base": "Reference",
 "class": "ModuleManager",
 "language": "GDScript",
-"path": "res://Modules/ModuleManager.gd"
+"path": "res://Source/Modules/ModuleManager.gd"
 }, {
-"base": "RigidBody2D",
+"base": "Reference",
 "class": "Player",
 "language": "GDScript",
-"path": "res://Entities/Player/Player.gd"
+"path": "res://Source/Entities/Player/Player.gd"
 } ]
 _global_script_class_icons={
 "Connector": "",
@@ -45,12 +45,12 @@ _global_script_class_icons={
 [application]
 
 config/name="Reassembly"
-run/main_scene="res://Levels/DebugLevel.tscn"
+run/main_scene="res://Source/Levels/DebugLevel.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-Globals="*res://Autoloads/Globals.gd"
+Globals="*res://Source/Autoloads/Globals.gd"
 
 [display]
 
