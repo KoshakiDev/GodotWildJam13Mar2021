@@ -5,7 +5,7 @@ extends Node2D
 signal energy_changed(energy, max_energy)
 signal registered_module(module)
 signal removed_module(module)
-
+signal energy_depleted
 
 # Maximum energy.
 export var max_energy := 100
@@ -97,6 +97,7 @@ func use_module(module: Module, event: InputEvent) -> void:
 			# Actually use the module
 			module.use(event)
 		else:
+			emit_signal("energy_depleted")
 			print("Not enough energy!")
 	else:
 		print("Tried to activate non-active module %s" % module.name)
