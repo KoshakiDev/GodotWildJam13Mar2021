@@ -2,6 +2,20 @@ class_name Module
 extends Node2D
 
 
+enum Type {
+	Passive,
+	Active,
+}
+
+# The mass this module will add to the body
+export var mass: float = 0
+# The amount of energy this module reserves (reduces max_energy of the player).
+export var energey_reserved: float = 0
+# The amount of energy this modules consumes when activated (only for active modules).
+export var energy_consumption: float = 0
+
+export(Type) var module_type: int = 0
+
 # Used to keep track of the modules that were connected to each of the connectors.
 # Keys are the connectors (Connector) values are the modules (Module).
 var connected_modules := {}
@@ -13,6 +27,13 @@ var colldider_rotations := []
 
 onready var connections := $Connections.get_children()
 onready var colliders := $CollisionBoxes.get_children()
+
+
+## Override functions:
+
+# Called whenever this module should be used (only for active-type modules).
+func use(_event: InputEvent):
+	pass
 
 
 func _ready():
