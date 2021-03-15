@@ -9,27 +9,27 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Reference",
+"base": "Position2D",
 "class": "Connector",
 "language": "GDScript",
 "path": "res://Source/Modules/Connector.gd"
 }, {
-"base": "Reference",
+"base": "Control",
 "class": "HUD",
 "language": "GDScript",
 "path": "res://Source/HUD/HUD.gd"
 }, {
-"base": "Reference",
+"base": "Node2D",
 "class": "Module",
 "language": "GDScript",
 "path": "res://Source/Modules/Module.gd"
 }, {
-"base": "Reference",
+"base": "Node2D",
 "class": "ModuleManager",
 "language": "GDScript",
 "path": "res://Source/Modules/ModuleManager.gd"
 }, {
-"base": "Reference",
+"base": "RigidBody2D",
 "class": "Player",
 "language": "GDScript",
 "path": "res://Source/Entities/Player/Player.gd"
