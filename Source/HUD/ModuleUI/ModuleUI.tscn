@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Source/HUD/ModuleUI.gd" type="Script" id=1]
+[ext_resource path="res://Source/HUD/ModuleUI/ModuleUI.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Fonts/ModuleTitlesFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Resources/Themes/ModuleUI.tres" type="Theme" id=3]
 
 [node name="ModuleUI" type="MarginContainer"]
 anchor_right = 1.0
@@ -21,6 +23,7 @@ margin_left = 100.0
 margin_top = 100.0
 margin_right = 1820.0
 margin_bottom = 980.0
+theme = ExtResource( 3 )
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
 margin_left = 7.0
@@ -50,19 +53,36 @@ size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="Panel/MarginContainer/HBoxContainer/Character"]
 margin_right = 786.0
-margin_bottom = 14.0
+margin_bottom = 54.0
+theme = ExtResource( 3 )
+custom_fonts/font = ExtResource( 2 )
 text = "Character"
 align = 1
 
 [node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/HBoxContainer/Character"]
-margin_top = 18.0
+margin_top = 58.0
 margin_right = 786.0
-margin_bottom = 22.0
+margin_bottom = 62.0
+theme = ExtResource( 3 )
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/MarginContainer/HBoxContainer/Character"]
+margin_top = 66.0
+margin_right = 786.0
+margin_bottom = 856.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ViewportContainer" type="ViewportContainer" parent="Panel/MarginContainer/HBoxContainer/Character/MarginContainer"]
+margin_right = 786.0
+margin_bottom = 790.0
+
+[node name="Viewport" type="Viewport" parent="Panel/MarginContainer/HBoxContainer/Character/MarginContainer/ViewportContainer"]
 
 [node name="VSeparator" type="VSeparator" parent="Panel/MarginContainer/HBoxContainer"]
 margin_left = 801.0
 margin_right = 805.0
 margin_bottom = 856.0
+theme = ExtResource( 3 )
 
 [node name="Inventory" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer"]
 margin_left = 820.0
@@ -72,11 +92,14 @@ size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="Panel/MarginContainer/HBoxContainer/Inventory"]
 margin_right = 786.0
-margin_bottom = 14.0
+margin_bottom = 54.0
+theme = ExtResource( 3 )
+custom_fonts/font = ExtResource( 2 )
 text = "Inventory"
 align = 1
 
 [node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/HBoxContainer/Inventory"]
-margin_top = 18.0
+margin_top = 58.0
 margin_right = 786.0
-margin_bottom = 22.0
+margin_bottom = 62.0
+theme = ExtResource( 3 )
