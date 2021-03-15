@@ -3,13 +3,15 @@ extends Node2D
 
 # Emitted whenever the module energy changes.
 signal energy_changed(energy, max_energy)
+signal registered_module(module)
+signal removed_module(module)
 
 
 # Maximum energy.
 export var max_energy := 100
 
-# Mass of all the modules together.
-var accumulated_mass: float
+# weight of all the modules together.
+var accumulated_weight: float
 # Current energy.
 var energy: float
 # Currently reserved (unusable) energy.
@@ -20,7 +22,19 @@ var energy_reserved: float
 var use_mapping := {}
 
 
-func _ready() -> void:
+onready var energy_refill_timer := $EnergyRefillTimer
+
+
+func _unhandled_input(event: InputEvent):
+	# Check if any of the use_mapping actions are pressed.
+	for input_action in use_mapping:
+		if event.is_action_pressed(input_action):
+			# Use the module associated with this action.
+			use_module(use_mapping[input_action], event)
+
+
+# Sets up the ModuleManager for use. Needs to be called after the player is ready.
+func setup() -> void:
 	var head: Module = $PlayerHead
 	var thruster: Module = $Thruster
 	
@@ -35,43 +49,40 @@ func _ready() -> void:
 	# Refill energy initially.
 	refill_energy()
 
-func _unhandled_input(event: InputEvent):
-	# Check if any of the use_mapping actions are pressed.
-	for input_action in use_mapping:
-		if event.is_action_pressed(input_action):
-			# Use the module associated with this action.
-			use_module(use_mapping[input_action], event)
-
-
-# Registers a module to add its mass, reserved energy and add it's input action.
+# Registers a module to add its weight, reserved energy and add it's input action.
 # Automatically subtracts those values when the module is freed (see _on_module_removed)
 func register_module(module: Module, input_action := "") -> void:
 	if input_action != "":
 		use_mapping[input_action] = module
-	accumulated_mass += module.mass
-	energy_reserved += module.energey_reserved
-	module.connect("tree_exited", self, "_on_module_removed", [module.mass, module.energey_reserved, input_action])
+	accumulated_weight += module.weight
+	energy_reserved += module.energy_reserved
+	module.connect("tree_exiting", self, "_on_module_removed", [module, input_action])
+	emit_signal("registered_module", module)
 
-# Is called whenever a module is removed. Changes mass, reserved energy and use_mapping
+# Is called whenever a module is removed. Changes weight, reserved energy and use_mapping
 # to not include that module anymore.
-func _on_module_removed(module_mass: float, module_energy_reserved: float, input_action: String) -> void:
+func _on_module_removed(module: Module, input_action: String) -> void:
 	if use_mapping.has(input_action):
 		use_mapping.erase(input_action)
-	accumulated_mass -= module_mass
-	energy_reserved -= module_energy_reserved
+	accumulated_weight -= module.weight
+	energy_reserved -= module.energy_reserved
+	emit_signal("removed_module", module)
 
 # Refills the energy to the full (or to a percentile of the full energy based on
 # fill_multiplier) fill_multiplier is capped at 1.0.
 func refill_energy(fill_multiplier := 1.0) -> void:
-	fill_multiplier = min(fill_multiplier, 1.0)
-	energy = (max_energy - energy_reserved) * fill_multiplier
-	print("Refilled energy: %s" % energy)
-	emit_signal("energy_changed", energy, max_energy)
+	# Only refill the energy, if the refill cooldown has run out.
+	# TODO: move to call of refill_energy().
+	if energy_refill_timer.is_stopped():
+		fill_multiplier = min(fill_multiplier, 1.0)
+		energy = (max_energy - energy_reserved) * fill_multiplier
+		emit_signal("energy_changed", energy, max_energy)
 
 # Reduces energy by amount and emits energy_changed signal.
 func use_energy(amount: float) -> void:
 	energy -= amount
 	emit_signal("energy_changed", energy, max_energy)
+	energy_refill_timer.start(.2)
 
 # Uses the module if it is an active-type module and there is enough energy
 # for it. Uses up the needed energy.
@@ -89,3 +100,4 @@ func use_module(module: Module, event: InputEvent) -> void:
 			print("Not enough energy!")
 	else:
 		print("Tried to activate non-active module %s" % module.name)
+

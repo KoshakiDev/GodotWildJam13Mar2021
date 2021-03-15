@@ -10,8 +10,8 @@ func _physics_process(delta):
 	
 	var rotate_dir: float = Input.get_action_strength("rotate_right") - Input.get_action_strength("rotate_left")
 	
-	owner.applied_force.x = dir * roll_speed
+#	owner.add_force(Vector2.ZERO, Vector2.RIGHT * dir * roll_speed)
 	
 	if rotate_dir:
 #		if not owner.test_motion(Vector2.DOWN * 5):
-		owner.angular_velocity = lerp(owner.angular_velocity, rotate_dir * rotation_speed, rotation_accel)
+		owner.angular_velocity = lerp(owner.angular_velocity, rotate_dir * rotation_speed / owner.mass, rotation_accel)

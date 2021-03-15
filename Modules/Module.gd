@@ -7,10 +7,10 @@ enum Type {
 	Active,
 }
 
-# The mass this module will add to the body
-export var mass: float = 0
+# The weight this module will add to the body
+export var weight: float = 0
 # The amount of energy this module reserves (reduces max_energy of the player).
-export var energey_reserved: float = 0
+export var energy_reserved: float = 0
 # The amount of energy this modules consumes when activated (only for active modules).
 export var energy_consumption: float = 0
 
