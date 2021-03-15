@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Art/HUD/ProgressBars/EnergyBack.png" type="Texture" id=1]
-[ext_resource path="res://Art/HUD/ProgressBars/EnergyProgress.png" type="Texture" id=2]
-[ext_resource path="res://HUD/HUD.gd" type="Script" id=3]
+[ext_resource path="res://Resources/Art/HUD/ProgressBars/EnergyBack.png" type="Texture" id=1]
+[ext_resource path="res://Resources/Art/HUD/ProgressBars/EnergyProgress.png" type="Texture" id=2]
+[ext_resource path="res://Source/HUD/HUD.gd" type="Script" id=3]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;

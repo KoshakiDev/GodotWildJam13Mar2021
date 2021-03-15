@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Source/Modules/Module.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Source/Modules/Connector.gd" type="Script" id=2]
+[ext_resource path="res://Resources/Art/Player/Modules/Thruster_1.png" type="Texture" id=3]
+[ext_resource path="res://Source/Modules/Thruster/SmallThruster.gd" type="Script" id=4]
+[ext_resource path="res://Resources/Art/Player/Modules/Thruster_Flame.png" type="Texture" id=5]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float strength : hint_range(0, 1) = 1;
+
+void fragment() {
+	vec4 color = texture(TEXTURE, UV);
+	COLOR = color;
+	if (color.b <= 1.0 - strength) {
+		COLOR.a = 0.0;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/strength = 0.0
+
+[sub_resource type="Animation" id=3]
+resource_name = "thrust"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("FlameSprite:material:shader_param/strength")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6 ),
+"transitions": PoolRealArray( 0.732043, 1.31951, 1 ),
+"update": 0,
+"values": [ 0.0, 0.5, 0.0 ]
+}
+
+[node name="Thruster" instance=ExtResource( 1 )]
+script = ExtResource( 4 )
+weight = 2.0
+energy_consumption = 20.0
+module_type = 1
+thrust_force = 500
+
+[node name="ThrusterSprite" type="Sprite" parent="." index="0"]
+position = Vector2( 1, 32 )
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 3 )
+
+[node name="FlameSprite" type="Sprite" parent="." index="1"]
+material = SubResource( 2 )
+position = Vector2( 0, 78.5 )
+scale = Vector2( 0.5, 0.5 )
+z_index = -1
+texture = ExtResource( 5 )
+
+[node name="CollisionBoxes" parent="." index="2"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="CollisionBoxes" index="0"]
+position = Vector2( 0.331081, 0.595949 )
+polygon = PoolVector2Array( 21, 9, 37.5, 49, -39, 49, -22.6, 9, -22.6, -9.5, 21, -9.5 )
+
+[node name="Connector" type="Position2D" parent="Connections" index="0"]
+script = ExtResource( 2 )
+direction_string = "Up"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+anims/thrust = SubResource( 3 )

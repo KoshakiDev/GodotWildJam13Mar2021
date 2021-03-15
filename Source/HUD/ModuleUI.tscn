@@ -1,0 +1,82 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Source/HUD/ModuleUI.gd" type="Script" id=1]
+
+[node name="ModuleUI" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.12756
+margin_right = 3.12756
+custom_constants/margin_right = 100
+custom_constants/margin_top = 100
+custom_constants/margin_left = 100
+custom_constants/margin_bottom = 100
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="PanelContainer" parent="."]
+margin_left = 100.0
+margin_top = 100.0
+margin_right = 1820.0
+margin_bottom = 980.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1713.0
+margin_bottom = 873.0
+custom_constants/margin_right = 50
+custom_constants/margin_top = 5
+custom_constants/margin_left = 50
+custom_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer"]
+margin_left = 50.0
+margin_top = 5.0
+margin_right = 1656.0
+margin_bottom = 861.0
+custom_constants/separation = 15
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Character" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer"]
+margin_right = 786.0
+margin_bottom = 856.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/HBoxContainer/Character"]
+margin_right = 786.0
+margin_bottom = 14.0
+text = "Character"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/HBoxContainer/Character"]
+margin_top = 18.0
+margin_right = 786.0
+margin_bottom = 22.0
+
+[node name="VSeparator" type="VSeparator" parent="Panel/MarginContainer/HBoxContainer"]
+margin_left = 801.0
+margin_right = 805.0
+margin_bottom = 856.0
+
+[node name="Inventory" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer"]
+margin_left = 820.0
+margin_right = 1606.0
+margin_bottom = 856.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/HBoxContainer/Inventory"]
+margin_right = 786.0
+margin_bottom = 14.0
+text = "Inventory"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/HBoxContainer/Inventory"]
+margin_top = 18.0
+margin_right = 786.0
+margin_bottom = 22.0
