@@ -16,9 +16,9 @@ func update_energy_bar(energy: float, max_energy: float):
 		.1, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	tween.start()
 
-func shake():
+func shake_energy_bar():
 	tween.interpolate_property(
-		energy_bar, 'value',
+		energy_bar.get_material(), 'shader_param/offset',
 		1.0, 0.0,
-		.1, Tween.TRANS_LINEAR, Tween.EASE_IN)
+		.3, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	tween.start()

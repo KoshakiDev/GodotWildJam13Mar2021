@@ -33,6 +33,7 @@ func _physics_process(delta):
 
 func setup(hud: HUD):
 	module_manager.connect("energy_changed", hud, "update_energy_bar")
+	module_manager.connect("energy_depleted", hud, "shake_energy_bar")
 	module_manager.connect("registered_module", self, "update_mass")
 	module_manager.connect("removed_module", self, "update_mass")
 	
