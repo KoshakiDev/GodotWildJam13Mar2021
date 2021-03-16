@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Source/Modules/TimeSlower/TimeSlower.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Art/Player/Modules/Time_Slow_Module.png" type="Texture" id=2]
+[ext_resource path="res://Source/Modules/Connector.gd" type="Script" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 67.0
+
+[node name="TimeSlower" type="Node2D" groups=[
+"modules",
+]]
+script = ExtResource( 1 )
+energy_consumption = 50.0
+module_type = 1
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 2 )
+offset = Vector2( 0, 70 )
+
+[node name="CollisionBoxes" type="Node2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBoxes"]
+position = Vector2( 0, 33 )
+scale = Vector2( 0.4, 0.4 )
+shape = SubResource( 1 )
+
+[node name="Connections" type="Node2D" parent="."]
+
+[node name="Connector" type="Position2D" parent="Connections"]
+script = ExtResource( 3 )
+direction_string = "Up"
+connection_type = 1
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

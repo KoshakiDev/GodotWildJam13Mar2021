@@ -37,14 +37,23 @@ func _unhandled_input(event: InputEvent):
 func setup() -> void:
 	var head: Module = $PlayerHead
 	var thruster: Module = $Thruster
-	
+	var time_slower: Module = $TimeSlower
+	var gravity_nuller: Module = $GravityNuller
 	# Register the modules.
 	register_module(head)
 	register_module(thruster, "use_module_1")
+	register_module(time_slower, "use_module_4")
+	register_module(gravity_nuller, "use_module_2")
 	
 	# Connect the thruster to the head.
 	head.connect_module(thruster, head.get_connector_in(Vector2.DOWN),
 		thruster.get_connector_in(Vector2.UP))
+	
+	head.connect_module(time_slower, head.get_connector_in(Vector2.LEFT),
+		time_slower.get_connector_in(Vector2.UP))
+	
+	head.connect_module(gravity_nuller, head.get_connector_in(Vector2.RIGHT),
+		gravity_nuller.get_connector_in(Vector2.UP))
 	
 	# Refill energy initially.
 	refill_energy()
