@@ -39,7 +39,7 @@ func setup(hud: HUD):
 	
 	connect("hit_ground", module_manager, "refill_energy")
 	
-	module_manager.setup()
+	module_manager.setup(self)
 
 func update_mass(_module):
 	weight = base_weight + module_manager.accumulated_weight
