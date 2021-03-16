@@ -76,3 +76,6 @@ anims/thrust = SubResource( 3 )
 
 [node name="CenterPosition" parent="." index="5"]
 position = Vector2( 0, 28 )
+
+[node name="ThrustPosition" type="Position2D" parent="." index="6"]
+position = Vector2( 0, 20 )

@@ -17,7 +17,9 @@ func use(_event: InputEvent):
 		_body.linear_velocity = _body.linear_velocity.clamped(linear_clamp)
 	
 	# Apply the impulse to the player.
-	_body.apply_impulse($Connections/Connector.position, impulse)
+#	_body.apply_impulse($ThrustPosition.position, impulse)
+	_body.apply_central_impulse(impulse)
+	
 	
 	# Play the thrust animation to show the flame of the thruster
 	$AnimationPlayer.play("thrust")

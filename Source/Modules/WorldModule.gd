@@ -51,7 +51,7 @@ func reposition(new_position: Vector2, new_rotation: float):
 	.reposition(new_position, new_rotation)
 	for i in range(colliders.size()):
 		var collider = colliders[i]
-		collider.set_deferred("global_position", new_position + colldider_positions[i].rotated(new_rotation))
+		collider.set_deferred("position", new_position + colldider_positions[i].rotated(new_rotation))
 		collider.set_deferred("rotation", new_rotation + colldider_rotations[i])
 
 func set_module(new_module: Module) -> void:

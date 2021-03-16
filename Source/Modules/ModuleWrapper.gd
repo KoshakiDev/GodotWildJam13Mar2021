@@ -20,8 +20,8 @@ func connect_module(connector: Connector, other_module_wrapper: ModuleWrapper, o
 	assert(other_connector in other_module_wrapper.module.connectors)
 	# Set the position of the other module to connect the two points (the other
 	# module will be repositioned, not this one).
-	print("mgp: %s, cgp: %s, ocgp: %s" % [module.global_position, connector.position, other_connector.position])
-	other_module_wrapper.reposition(module.global_position +
+	print("mgp: %s, cgp: %s, ocgp: %s" % [module.position, connector.position, other_connector.position])
+	other_module_wrapper.reposition(module.position +
 		connector.position - other_connector.position,
 		connector.direction.angle() + other_connector.direction.angle()
 	)
@@ -34,7 +34,7 @@ func disconnect_connector(connector: Connector) -> void:
 
 # Positions the module and its colliders to new_position (a global_position).
 func reposition(new_position: Vector2, new_rotation: float):
-	module.global_position = new_position
+	module.position = new_position
 	module.rotation = new_rotation
 
 func set_module(new_module: Module) -> void:

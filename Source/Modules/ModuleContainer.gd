@@ -105,15 +105,19 @@ func get_connector_connected_to(connector: Connector) -> Connector:
 
 func disconnect_module(connector: Connector) -> void:
 	# If the connector is connected to nothing, ignore it.
-	print(connected_modules)
 	if not get_world_connector(connector) in connected_modules:
 		return
-	# Set the connected states of own connectors to false.
-	get_world_connector(connector).connected = false
-	get_character_connector(connector).connected = false
-	
-	# Set the connected states of the connected module to false.
+	# Get the other module and connector, before disconnecting
 	var other_module: ModuleContainer = connected_modules[get_world_connector(connector)][0]
 	var other_connector: Connector = connected_modules[get_world_connector(connector)][1]
-	other_module.get_world_connector(other_connector).connected = false
-	other_module.get_character_connector(other_connector).connected = false
+	
+	# Disconnect both sides of the connection.
+	_disconnect_connector(connector)
+	other_module._disconnect_connector(other_connector)
+
+func _disconnect_connector(connector: Connector):
+	# Set the connected states of own connectors to false.
+	var world_connector = get_world_connector(connector)
+	world_connector.connected = false
+	get_character_connector(connector).connected = false
+	connected_modules.erase(world_connector)
