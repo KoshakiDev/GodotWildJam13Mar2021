@@ -44,6 +44,8 @@ script = ExtResource( 4 )
 weight = 2.0
 energy_consumption = 20.0
 module_type = 1
+display_name = "Small Thruster"
+use_action = "use_module_1"
 thrust_force = 500
 
 [node name="ThrusterSprite" type="Sprite" parent="." index="0"]
@@ -71,3 +73,9 @@ direction_string = "Up"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
 anims/thrust = SubResource( 3 )
+
+[node name="CenterPosition" parent="." index="5"]
+position = Vector2( 0, 28 )
+
+[node name="ThrustPosition" type="Position2D" parent="." index="6"]
+position = Vector2( 0, 20 )

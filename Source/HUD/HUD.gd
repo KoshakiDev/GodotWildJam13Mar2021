@@ -5,7 +5,6 @@ extends Control
 onready var energy_bar := $EnergyBar
 onready var tween := $Tween
 
-
 func update_energy_bar(energy: float, max_energy: float):
 #	energy_bar.value = energy / max_energy * 100
 	var new_val = energy / max_energy * 100

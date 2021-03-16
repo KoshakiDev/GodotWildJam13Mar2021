@@ -1,0 +1,157 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Source/HUD/ModuleUI/ModuleUI.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Fonts/ModuleTitlesFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Source/HUD/ModuleUI/Character.gd" type="Script" id=4]
+[ext_resource path="res://Source/HUD/ModuleUI/Inventory.gd" type="Script" id=5]
+[ext_resource path="res://Source/HUD/ZoomCamera2D.gd" type="Script" id=6]
+[ext_resource path="res://Source/HUD/ModuleUI/Viewport.gd" type="Script" id=7]
+
+[node name="ModuleUI" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.12756
+margin_right = 3.12756
+mouse_filter = 2
+custom_constants/margin_right = 100
+custom_constants/margin_top = 100
+custom_constants/margin_left = 100
+custom_constants/margin_bottom = 100
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="PanelContainer" parent="."]
+margin_left = 100.0
+margin_top = 100.0
+margin_right = 1820.0
+margin_bottom = 980.0
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1713.0
+margin_bottom = 873.0
+mouse_filter = 2
+custom_constants/margin_right = 50
+custom_constants/margin_top = 5
+custom_constants/margin_left = 50
+custom_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer"]
+margin_left = 50.0
+margin_top = 5.0
+margin_right = 1656.0
+margin_bottom = 861.0
+mouse_filter = 2
+custom_constants/separation = 15
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Character" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer"]
+margin_right = 786.0
+margin_bottom = 856.0
+mouse_filter = 2
+size_flags_horizontal = 3
+script = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/HBoxContainer/Character"]
+margin_right = 786.0
+margin_bottom = 54.0
+custom_fonts/font = ExtResource( 2 )
+text = "Character"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/HBoxContainer/Character"]
+margin_top = 58.0
+margin_right = 786.0
+margin_bottom = 62.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/MarginContainer/HBoxContainer/Character"]
+margin_top = 66.0
+margin_right = 786.0
+margin_bottom = 856.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 40
+custom_constants/margin_top = 40
+custom_constants/margin_left = 40
+custom_constants/margin_bottom = 40
+
+[node name="ViewportContainer" type="ViewportContainer" parent="Panel/MarginContainer/HBoxContainer/Character/MarginContainer"]
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 746.0
+margin_bottom = 750.0
+mouse_filter = 2
+stretch = true
+
+[node name="Viewport" type="Viewport" parent="Panel/MarginContainer/HBoxContainer/Character/MarginContainer/ViewportContainer"]
+size = Vector2( 706, 710 )
+handle_input_locally = false
+disable_3d = true
+usage = 0
+render_target_update_mode = 3
+script = ExtResource( 7 )
+
+[node name="Camera2D" type="Camera2D" parent="Panel/MarginContainer/HBoxContainer/Character/MarginContainer/ViewportContainer/Viewport"]
+current = true
+script = ExtResource( 6 )
+
+[node name="Tween" type="Tween" parent="Panel/MarginContainer/HBoxContainer/Character/MarginContainer/ViewportContainer/Viewport/Camera2D"]
+
+[node name="VSeparator" type="VSeparator" parent="Panel/MarginContainer/HBoxContainer"]
+margin_left = 801.0
+margin_right = 805.0
+margin_bottom = 856.0
+
+[node name="Inventory" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer"]
+margin_left = 820.0
+margin_right = 1606.0
+margin_bottom = 856.0
+mouse_filter = 2
+size_flags_horizontal = 3
+script = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/HBoxContainer/Inventory"]
+margin_right = 786.0
+margin_bottom = 54.0
+custom_fonts/font = ExtResource( 2 )
+text = "Inventory"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/HBoxContainer/Inventory"]
+margin_top = 58.0
+margin_right = 786.0
+margin_bottom = 62.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/MarginContainer/HBoxContainer/Inventory"]
+margin_top = 66.0
+margin_right = 786.0
+margin_bottom = 856.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 50
+custom_constants/margin_top = 50
+custom_constants/margin_left = 50
+custom_constants/margin_bottom = 50
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/HBoxContainer/Inventory/MarginContainer"]
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 736.0
+margin_bottom = 740.0
+size_flags_horizontal = 5
+
+[node name="ItemGrid" type="GridContainer" parent="Panel/MarginContainer/HBoxContainer/Inventory/MarginContainer/ScrollContainer"]
+custom_constants/vseparation = 50
+custom_constants/hseparation = 50
+columns = 2
+
+[connection signal="size_changed" from="Panel/MarginContainer/HBoxContainer/Character/MarginContainer/ViewportContainer/Viewport" to="Panel/MarginContainer/HBoxContainer/Character/MarginContainer/ViewportContainer/Viewport" method="_on_Viewport_size_changed"]

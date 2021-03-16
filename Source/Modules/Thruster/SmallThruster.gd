@@ -10,14 +10,16 @@ export var linear_clamp := 200
 
 func use(_event: InputEvent):
 	
-	var impulse := Vector2.UP.rotated(owner.rotation) * thrust_force
+	var impulse := Vector2.UP.rotated(_body.rotation) * thrust_force
 	
-	if impulse.angle_to(owner.linear_velocity) > PI/2:
+	if impulse.angle_to(_body.linear_velocity) > PI/2:
 		# Limit the linear velocity (see linear_clamp above).
-		owner.linear_velocity = owner.linear_velocity.clamped(linear_clamp)
+		_body.linear_velocity = _body.linear_velocity.clamped(linear_clamp)
 	
 	# Apply the impulse to the player.
-	owner.apply_impulse($Connections/Connector.position, impulse)
+#	_body.apply_impulse($ThrustPosition.position, impulse)
+	_body.apply_central_impulse(impulse)
+	
 	
 	# Play the thrust animation to show the flame of the thruster
 	$AnimationPlayer.play("thrust")

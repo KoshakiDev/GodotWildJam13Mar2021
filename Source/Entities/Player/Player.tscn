@@ -1,120 +1,15 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Source/Modules/Head/PlayerHead.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Source/Modules/Thruster/SmallThruster.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Source/Modules/ModuleManager.gd" type="Script" id=3]
 [ext_resource path="res://Source/Entities/Player/Player.gd" type="Script" id=4]
-[ext_resource path="res://Source/Modules/TimeSlower/TimeSlower.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Source/Modules/GravityNuller/GravityNuller.tscn" type="PackedScene" id=6]
 
 [sub_resource type="PhysicsMaterial" id=1]
 bounce = 0.15
-
-[sub_resource type="AnimationNodeAnimation" id=2]
-animation = "Idle"
-
-[sub_resource type="AnimationNodeAnimation" id=3]
-animation = "Jump"
-
-[sub_resource type="AnimationNodeAnimation" id=4]
-animation = "Pull"
-
-[sub_resource type="AnimationNodeAnimation" id=5]
-animation = "Push"
-
-[sub_resource type="AnimationNodeAnimation" id=6]
-animation = "Roll"
-
-[sub_resource type="AnimationNodeAnimation" id=7]
-animation = "Walk"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=8]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=9]
-switch_mode = 2
-auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=10]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=11]
-switch_mode = 2
-auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=12]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=13]
-switch_mode = 2
-auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=14]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=15]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=16]
-switch_mode = 2
-auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=17]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=18]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=19]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=20]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=21]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=22]
-switch_mode = 2
-auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachine" id=23]
-states/Idle/node = SubResource( 2 )
-states/Idle/position = Vector2( 233, 95 )
-states/Jump/node = SubResource( 3 )
-states/Jump/position = Vector2( 233, 256 )
-states/Pull/node = SubResource( 4 )
-states/Pull/position = Vector2( 520, 95 )
-states/Push/node = SubResource( 5 )
-states/Push/position = Vector2( -73, 399 )
-states/Roll/node = SubResource( 6 )
-states/Roll/position = Vector2( -73, 95 )
-states/Walk/node = SubResource( 7 )
-states/Walk/position = Vector2( 520, 399 )
-transitions = [ "Idle", "Roll", SubResource( 8 ), "Roll", "Idle", SubResource( 9 ), "Idle", "Walk", SubResource( 10 ), "Walk", "Idle", SubResource( 11 ), "Idle", "Jump", SubResource( 12 ), "Jump", "Idle", SubResource( 13 ), "Walk", "Jump", SubResource( 14 ), "Roll", "Jump", SubResource( 15 ), "Pull", "Idle", SubResource( 16 ), "Idle", "Pull", SubResource( 17 ), "Walk", "Pull", SubResource( 18 ), "Idle", "Push", SubResource( 19 ), "Walk", "Push", SubResource( 20 ), "Roll", "Push", SubResource( 21 ), "Push", "Idle", SubResource( 22 ) ]
-graph_offset = Vector2( -292.956, 15 )
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=24]
-
-[sub_resource type="Animation" id=25]
-
-[sub_resource type="Animation" id=26]
-
-[sub_resource type="Animation" id=27]
-
-[sub_resource type="Animation" id=28]
-
-[sub_resource type="Animation" id=29]
-
-[sub_resource type="Animation" id=30]
 
 [node name="Player" type="RigidBody2D"]
 mass = 0.75
 physics_material_override = SubResource( 1 )
 script = ExtResource( 4 )
-
-[node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 23 )
-anim_player = NodePath("AnimationPlayer")
-parameters/playback = SubResource( 24 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationTree"]
-anims/Idle = SubResource( 25 )
-anims/Jump = SubResource( 26 )
-anims/Pull = SubResource( 27 )
-anims/Push = SubResource( 28 )
-anims/Roll = SubResource( 29 )
-anims/Walk = SubResource( 30 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
@@ -123,14 +18,6 @@ smoothing_speed = 8.0
 
 [node name="ModuleManager" type="Node2D" parent="."]
 script = ExtResource( 3 )
-
-[node name="PlayerHead" parent="ModuleManager" instance=ExtResource( 1 )]
-
-[node name="Thruster" parent="ModuleManager" instance=ExtResource( 2 )]
-
-[node name="TimeSlower" parent="ModuleManager" instance=ExtResource( 5 )]
-
-[node name="GravityNuller" parent="ModuleManager" instance=ExtResource( 6 )]
 
 [node name="EnergyRefillTimer" type="Timer" parent="ModuleManager"]
 one_shot = true
