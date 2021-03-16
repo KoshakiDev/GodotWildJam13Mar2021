@@ -58,6 +58,14 @@ rotation = 1.56173
 position = Vector2( 18.8518, 292.756 )
 rotation = 1.56173
 
+[node name="Platform15" parent="Platforms" instance=ExtResource( 1 )]
+position = Vector2( 7.8186, -342.986 )
+rotation = 1.56173
+
+[node name="Platform16" parent="Platforms" instance=ExtResource( 1 )]
+position = Vector2( 0.672601, -970.435 )
+rotation = 1.56173
+
 [node name="Player" parent="." instance=ExtResource( 4 )]
 position = Vector2( 255.943, -44.3199 )
 gravity_scale = 3.0

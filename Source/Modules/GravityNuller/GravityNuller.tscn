@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Source/Modules/GravityNuller/GravityNuller.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Art/Player/Modules/Anti_Gravity.png" type="Texture" id=2]
 [ext_resource path="res://Source/Modules/Connector.tscn" type="PackedScene" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 30.0
 
 [node name="GravityNuller" type="Node2D" groups=[
 "modules",
@@ -17,11 +20,19 @@ texture = ExtResource( 2 )
 offset = Vector2( 0, 70 )
 
 [node name="CollisionBoxes" type="Node2D" parent="."]
-scale = Vector2( 0.4, 0.4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBoxes"]
+position = Vector2( 0, 37 )
+shape = SubResource( 1 )
 
 [node name="Connections" type="Node2D" parent="."]
-scale = Vector2( 0.4, 0.4 )
 
 [node name="Connector" parent="Connections" instance=ExtResource( 3 )]
 direction_string = "Up"
 connection_type = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

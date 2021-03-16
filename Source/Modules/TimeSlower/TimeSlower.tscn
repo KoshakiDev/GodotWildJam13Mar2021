@@ -5,7 +5,7 @@
 [ext_resource path="res://Source/Modules/Connector.gd" type="Script" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 67.0
+radius = 27.0946
 
 [node name="TimeSlower" type="Node2D" groups=[
 "modules",
@@ -23,7 +23,6 @@ offset = Vector2( 0, 70 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBoxes"]
 position = Vector2( 0, 33 )
-scale = Vector2( 0.4, 0.4 )
 shape = SubResource( 1 )
 
 [node name="Connections" type="Node2D" parent="."]
