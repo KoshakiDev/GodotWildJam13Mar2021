@@ -21,6 +21,8 @@ onready var item_grid := $MarginContainer/ScrollContainer/ItemGrid
 
 
 func setup():
+	Events.connect("module_picked_up", self, "add_item")
+	
 	var thruster := preload("res://Source/Modules/Thruster/SmallThruster.tscn").instance()
 	var thruster_module = ModuleContainer.new(thruster)
 	add_item(thruster_module)

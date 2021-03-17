@@ -54,27 +54,9 @@ func setup(player) -> void:
 	
 	# Register the modules.
 	register_module(head)
-#	register_module(thruster, "use_module_1")
-	
-	# Connect the thruster to the head.
-#	head.connect_module(thruster, head.get_connector_in(Vector2.DOWN),
-#		thruster.get_connector_in(Vector2.UP))
-	
-#	head.connect_module(time_slower, head.get_connector_in(Vector2.LEFT),
-#		time_slower.get_connector_in(Vector2.UP))
-	
-#	head.connect_module(gravity_nuller, head.get_connector_in(Vector2.RIGHT),
-#		gravity_nuller.get_connector_in(Vector2.UP))
 	
 	# Refill energy initially.
 	refill_energy()
-
-## Adds a module to the module manager. The difference to register_module is that
-## the module does not exist in player yet.
-## The module will automatically be registered.
-#func add_module(module: Module):
-#	add_child(module)
-#	register_module(module)
 
 # Registers a module to add its weight, reserved energy and add it's input action.
 # Automatically subtracts those values when the module is freed (see _on_module_removed)
@@ -128,18 +110,17 @@ func use_energy(amount: float) -> void:
 # Uses the module if it is an active-type module and there is enough energy
 # for it. Uses up the needed energy.
 # The InputEvent is passed for additional context information.
-func use_module(module: ModuleContainer, event: InputEvent) -> void:
+func use_module(module_container: ModuleContainer, event: InputEvent) -> void:
 	# Check if the module is active type (can actually be used).
-	if module.module_type == Module.Type.Active:
-		var energy_needed = module.energy_consumption
+	if module_container.module_type == Module.Type.Active:
+		var energy_needed = module_container.energy_consumption
 		if energy_needed <= energy:
 			# Subtract the energy
 			use_energy(energy_needed)
 			# Actually use the module
-			module.world_module.use(event)
+			module_container.world_module.use(event)
 		else:
 			emit_signal("energy_depleted")
 			print("Not enough energy!")
 	else:
-		print("Tried to activate non-active module %s" % module.name)
-
+		print("Tried to activate non-active module.")

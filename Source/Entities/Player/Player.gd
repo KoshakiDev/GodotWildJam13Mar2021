@@ -36,3 +36,4 @@ func setup(hud: HUD):
 
 func update_mass(_module):
 	weight = base_weight + module_manager.accumulated_weight
+
