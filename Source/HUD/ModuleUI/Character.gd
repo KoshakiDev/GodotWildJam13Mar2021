@@ -45,7 +45,7 @@ func register_module(module: ModuleContainer) -> void:
 	emit_signal("module_registered", module)
 
 func on_connector_toggled(toggled: bool, module: ModuleContainer, connector: Connector) -> void:
-	if selected_module and toggled:
+	if selected_module and selected_connector and toggled and connector.can_connect(selected_connector):
 		print("Clicked on connector: %s" % connector.name)
 #		print("Connecting %s to %s" % [selected_module.name, module.name])
 		# Connects the selected module (from inventory) with the module that was

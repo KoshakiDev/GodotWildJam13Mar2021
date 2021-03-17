@@ -64,5 +64,5 @@ func on_connector_toggled(toggled, module, connector) -> void:
 	else:
 		emit_signal("module_deselected")
 
-func on_connector_hovered() -> void:
+func on_connector_hovered(connector: Connector, hovered: float):
 	pass
