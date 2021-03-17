@@ -78,13 +78,16 @@ func on_connector_toggled(toggled: bool, module: ModuleContainer, connector: Con
 		# button that way)
 		connector.connector_button.pressed = false
 
-func update_connectors(module: ModuleContainer):
+func update_connectors(module: ModuleContainer, no_delete := false):
 	for connector in module.get_connectors():
-		module.get_character_connector(connector).delete_connector_button()
-		print(connector.name)
+		# If the connector already has a button, dont add a new one.
+		connector = module.get_character_connector(connector)
+		if no_delete and connector.connector_button:
+			print("skipping connector")
+			continue
+		connector.delete_connector_button()
 		if not connector.connected:
-			print("Connecting button")
-			module.get_character_connector(connector).generate_connector_button(self, module)
+			connector.generate_connector_button(self, module)
 
 func on_disconnector_toggled(toggled: bool, module: ModuleContainer, connector: Connector) -> void:
 	if toggled:
@@ -98,9 +101,11 @@ func on_disconnector_toggled(toggled: bool, module: ModuleContainer, connector: 
 		module_manager.remove_module(module)
 		remove_module(module)
 		
-		# Update all the connector buttons.
+		module.get_character_connector(connector).delete_connector_button()
+		
+		# Update all the connector buttons, without deleting old ones.
 		for module in modules:
-			update_connectors(module)
+			update_connectors(module, true)
 	# Only do this, when the button is not being removed.
 	else:
 		# Set the toggle buttons state to be unpressed again (behaves like a normal

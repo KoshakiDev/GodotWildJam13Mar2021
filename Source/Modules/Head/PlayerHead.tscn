@@ -32,13 +32,15 @@ script = ExtResource( 3 )
 direction_string = "Down"
 
 [node name="Connector2" type="Position2D" parent="Connections" index="1"]
-position = Vector2( 55, 0 )
+position = Vector2( 55, -4 )
 script = ExtResource( 3 )
 direction_string = "Right"
 connection_type = 1
+size = Vector2( 6, 11 )
 
 [node name="Connector3" type="Position2D" parent="Connections" index="2"]
-position = Vector2( -55, 0 )
+position = Vector2( -56, -4 )
 script = ExtResource( 3 )
 direction_string = "Left"
 connection_type = 1
+size = Vector2( 6, 11 )

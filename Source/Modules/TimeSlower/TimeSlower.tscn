@@ -1,38 +1,38 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Source/Modules/TimeSlower/TimeSlower.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Art/Player/Modules/Time_Slow_Module.png" type="Texture" id=2]
 [ext_resource path="res://Source/Modules/Connector.gd" type="Script" id=3]
+[ext_resource path="res://Source/Modules/Module.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 27.0946
 
-[node name="TimeSlower" type="Node2D" groups=[
-"modules",
-]]
+[node name="TimeSlower" instance=ExtResource( 4 )]
 script = ExtResource( 1 )
 energy_consumption = 50.0
 module_type = 1
+display_name = "Time Slower"
+use_action = "use_module_2"
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite" type="Sprite" parent="." index="0"]
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 2 )
 offset = Vector2( 0, 70 )
 
-[node name="CollisionBoxes" type="Node2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBoxes"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBoxes" index="0"]
 position = Vector2( 0, 33 )
 shape = SubResource( 1 )
 
-[node name="Connections" type="Node2D" parent="."]
-
-[node name="Connector" type="Position2D" parent="Connections"]
+[node name="Connector" type="Position2D" parent="Connections" index="0"]
 script = ExtResource( 3 )
 direction_string = "Up"
 connection_type = 1
 
-[node name="Timer" type="Timer" parent="."]
+[node name="CenterPosition" parent="." index="3"]
+position = Vector2( 0, 32 )
+
+[node name="Timer" type="Timer" parent="." index="4"]
 one_shot = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
