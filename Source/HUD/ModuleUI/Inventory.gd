@@ -19,6 +19,14 @@ func setup():
 	var thruster := preload("res://Source/Modules/Thruster/SmallThruster.tscn").instance()
 	var thruster_module = ModuleContainer.new(thruster)
 	add_item(thruster_module)
+	
+	var anti_grav := preload("res://Source/Modules/GravityNuller/GravityNuller.tscn").instance()
+	var anti_grav_module = ModuleContainer.new(anti_grav)
+	add_item(anti_grav_module)
+	
+	var time_slow := preload("res://Source/Modules/TimeSlower/TimeSlower.tscn").instance()
+	var time_slow_module = ModuleContainer.new(time_slow)
+	add_item(time_slow_module)
 
 func add_item(module: ModuleContainer):
 	# If the module was already added, readd it to the grid (saves resources).
@@ -56,5 +64,5 @@ func on_connector_toggled(toggled, module, connector) -> void:
 	else:
 		emit_signal("module_deselected")
 
-func on_connector_hovered() -> void:
+func on_connector_hovered(connector: Connector, hovered: float):
 	pass

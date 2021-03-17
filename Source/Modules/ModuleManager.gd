@@ -60,6 +60,12 @@ func setup(player) -> void:
 #	head.connect_module(thruster, head.get_connector_in(Vector2.DOWN),
 #		thruster.get_connector_in(Vector2.UP))
 	
+#	head.connect_module(time_slower, head.get_connector_in(Vector2.LEFT),
+#		time_slower.get_connector_in(Vector2.UP))
+	
+#	head.connect_module(gravity_nuller, head.get_connector_in(Vector2.RIGHT),
+#		gravity_nuller.get_connector_in(Vector2.UP))
+	
 	# Refill energy initially.
 	refill_energy()
 

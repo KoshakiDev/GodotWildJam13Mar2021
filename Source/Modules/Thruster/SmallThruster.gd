@@ -10,7 +10,7 @@ export var linear_clamp := 200
 
 func use(_event: InputEvent):
 	
-	var impulse := Vector2.UP.rotated(_body.rotation) * thrust_force
+	var impulse := Vector2.UP.rotated(_body.rotation + rotation) * thrust_force
 	
 	if impulse.angle_to(_body.linear_velocity) > PI/2:
 		# Limit the linear velocity (see linear_clamp above).

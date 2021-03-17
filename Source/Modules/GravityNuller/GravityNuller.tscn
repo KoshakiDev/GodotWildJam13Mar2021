@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Source/Modules/GravityNuller/GravityNuller.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Art/Player/Modules/Anti_Gravity.png" type="Texture" id=2]
+[ext_resource path="res://Source/Modules/Connector.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Source/Modules/Module.tscn" type="PackedScene" id=4]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 30.0
+
+[node name="GravityNuller" instance=ExtResource( 4 )]
+script = ExtResource( 1 )
+energy_reserved = 10.0
+energy_consumption = 10.0
+module_type = 1
+display_name = "Gravity Nuller"
+use_action = "use_module_4"
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 2 )
+offset = Vector2( 0, 70 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBoxes" index="0"]
+position = Vector2( 0, 37 )
+shape = SubResource( 1 )
+
+[node name="Connector" parent="Connections" index="0" instance=ExtResource( 3 )]
+direction_string = "Up"
+connection_type = 1
+
+[node name="CenterPosition" parent="." index="3"]
+position = Vector2( 0, 36 )
+
+[node name="Timer" type="Timer" parent="." index="4"]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
