@@ -3,13 +3,18 @@ extends VBoxContainer
 
 signal module_selected(module, connector)
 signal module_deselected()
-signal connector_hovered(connector_type)
+signal connector_hovered(connector_type, hovered)
 
 
 const item_panel_scene := preload("res://Source/HUD/ModuleUI/ItemPanel.tscn")
 
 # Array to keep track of modules that exist in the players inventory.
 var modules = {}
+
+var selected_module: ModuleContainer
+var selected_connector: Connector
+
+var stop_connectors: bool = false
 
 
 onready var item_grid := $MarginContainer/ScrollContainer/ItemGrid
@@ -58,11 +63,42 @@ func remove_item(module: ModuleContainer):
 	for connector in module.get_connectors():
 		module.get_inventory_connector(connector).delete_connector_button()
 
+# Highlights all connectors of the given type, if active is true, removes the
+# highlight if it is false.
+func highlight_connectors(connector_type: int, active: bool) -> void:
+	for module in modules:
+		for connector in module.get_connectors():
+			if not active or connector.connection_type == connector_type:
+				module.get_inventory_connector(connector).set_highlight(active)
+
+func on_Character_module_registered(module: ModuleContainer) -> void:
+	deselect(false)
+	remove_item(module)
+
 func on_connector_toggled(toggled, module, connector) -> void:
+	# If the currently selected connector is toggled of, remove its selection.
+	if stop_connectors:
+		return
+	# Always deselect the selected connector, when one is clicked
+	deselect(true)
+	# Select the connector that is clicked.
 	if toggled:
+		selected_module = module
+		selected_connector = connector
 		emit_signal("module_selected", module, connector)
-	else:
+
+func deselect(emit_signal: bool):
+	# This stops the selected_connector in on_connector_toggled; fixes a weird bug.
+	stop_connectors = true
+	# This also sets the selected connector / module to null, as the 
+	# on_connector_toggled is called and resets those values.
+	if selected_connector:
+		selected_connector.connector_button.pressed = false
+	selected_module = null
+	selected_connector = null
+	stop_connectors = false
+	if emit_signal:
 		emit_signal("module_deselected")
 
 func on_connector_hovered(connector: Connector, hovered: float):
-	pass
+	emit_signal("connector_hovered", connector.connection_type, hovered)
