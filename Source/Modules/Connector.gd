@@ -9,6 +9,8 @@ enum Type {
 }
 
 const connector_button_scene := preload("res://Source/HUD/ModuleUI/ConnectorButton.tscn")
+const connector_highlight_style := preload("res://Resources/Themes/Styles/Connector/NormalHighlight.tres")
+const connector_normal_style := preload("res://Resources/Themes/Styles/Connector/Normal.tres")
 
 # The direction of this connector as a string, to make it easier to export.
 export(String, "Left", "Right", "Up", "Down") var direction_string: String setget set_direction_string
@@ -36,10 +38,10 @@ func delete_connector_button():
 # press_callback needs to look like this: toggle_callback(toggled, module, connector)
 # hover_callback needs to look like this: hover_callback(connector, hovering)
 func generate_connector_button(node: Node, module_container, toggle_callback := "on_connector_toggled",
-hover_callback := "on_connector_hovered") -> void:
+hover_callback := "on_connector_hovered", custom_button_scene: PackedScene = connector_button_scene) -> void:
 	print("Generating connector_button with module: %s" % module_container)
 	self.module_container = module_container
-	connector_button = connector_button_scene.instance()
+	connector_button = custom_button_scene.instance()
 	add_child(connector_button)
 	connector_button.rect_position = -size
 	connector_button.rect_size = size*2
@@ -47,6 +49,16 @@ hover_callback := "on_connector_hovered") -> void:
 	if hover_callback != "":
 		connector_button.connect("mouse_entered", node, hover_callback, [self, true])
 		connector_button.connect("mouse_exited", node, hover_callback, [self, false])
+
+func set_highlight(active: bool, custom_highlight_style: StyleBox = connector_highlight_style):
+	var style: StyleBox
+	if active:
+		style = custom_highlight_style
+	else:
+		style = connector_normal_style
+	# Set the style of the connector button.
+	if connector_button and connector_button.name.begins_with("ConnectorButton"):
+		connector_button.set("custom_styles/normal", style)
 
 # Returns true if this connector can connect to the other connector.
 func can_connect(other_connector: Connector) -> bool:

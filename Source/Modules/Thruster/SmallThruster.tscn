@@ -68,8 +68,10 @@ position = Vector2( 0.331081, 0.595949 )
 polygon = PoolVector2Array( 21, 9, 37.5, 49, -39, 49, -22.6, 9, -22.6, -9.5, 21, -9.5 )
 
 [node name="Connector" type="Position2D" parent="Connections" index="0"]
+position = Vector2( -0.8, 0.5 )
 script = ExtResource( 2 )
 direction_string = "Up"
+size = Vector2( 21.8, 9 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
 anims/thrust = SubResource( 3 )

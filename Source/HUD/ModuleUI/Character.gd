@@ -3,7 +3,8 @@ extends VBoxContainer
 
 signal module_registered(module)
 signal module_removed(module)
-signal hovered_connector(connector_type)
+signal connector_hovered(connector_type)
+signal connector_unhovered()
 
 
 # Array to keep track of all the modules (ModuleContainer) that are in the
@@ -20,7 +21,7 @@ var selected_connector: Connector
 onready var viewport := $MarginContainer/ViewportContainer/Viewport
 
 
-func setup(module_manager: ModuleManager):
+func setup(module_manager: ModuleManager) -> void:
 	self.module_manager = module_manager
 	# Clear the modules, if they exist already.
 	if modules.size() > 0:
@@ -67,7 +68,8 @@ func on_connector_toggled(toggled: bool, module: ModuleContainer, connector: Con
 			self,
 			selected_module,
 			"on_disconnector_toggled",
-			""
+			"",
+			preload("res://Source/HUD/ModuleUI/DisconnectorButton.tscn")
 		)
 		
 		# Deselect the selected module, when done, so you can't connect it again.
@@ -78,7 +80,7 @@ func on_connector_toggled(toggled: bool, module: ModuleContainer, connector: Con
 		# button that way)
 		connector.connector_button.pressed = false
 
-func update_connectors(module: ModuleContainer, no_delete := false):
+func update_connectors(module: ModuleContainer, no_delete := false) -> void:
 	for connector in module.get_connectors():
 		# If the connector already has a button, dont add a new one.
 		connector = module.get_character_connector(connector)
@@ -112,14 +114,44 @@ func on_disconnector_toggled(toggled: bool, module: ModuleContainer, connector: 
 		# button that way)
 		connector.connector_button.pressed = false
 
-func on_connector_hovered(connector: Connector, hovered: float):
-	pass
+func on_connector_hovered(connector: Connector, hovered: float) -> void:
+	# Don't highlight anything, if a module is selected.
+	if selected_module:
+		return
+	if hovered:
+		emit_signal("connector_hovered", connector.connection_type)
+	else:
+		emit_signal("connector_unhovered")
 
-func on_Inventory_module_selected(module: ModuleContainer, connector: Connector):
+func on_Inventory_hovered(connector_type: int, hovered: bool) -> void:
+	if selected_connector and selected_connector.connection_type == connector_type:
+		return
+	highlight_connectors(connector_type, hovered)
+	# If there is a selected connector and nothing is hovered anymore, rehighlight
+	# the selections connectors.
+	if selected_connector:
+		highlight_connectors(selected_connector.connection_type, not hovered)
+
+# Highlights all connectors of the given type, if active is true, removes the
+# highlight if it is false.
+func highlight_connectors(connector_type: int, active: bool) -> void:
+	for module in modules:
+		for connector in module.get_connectors():
+			if connector.connection_type == connector_type:
+				module.get_character_connector(connector).set_highlight(active)
+
+func on_Inventory_module_selected(module: ModuleContainer, connector: Connector) -> void:
 	selected_module = module
 	selected_connector = connector
+	# Highlight respective connectors when selecting a module.
+	highlight_connectors(selected_connector.connection_type, true)
 
-func deselect_module():
+func deselect_module() -> void:
+	if not (selected_connector and selected_module):
+		return
+	# Remove the highlight on the respective connectors.
+	highlight_connectors(selected_connector.connection_type, false)
+	# Unset the selected module and connector.
 	selected_module = null
 	selected_connector = null
 
