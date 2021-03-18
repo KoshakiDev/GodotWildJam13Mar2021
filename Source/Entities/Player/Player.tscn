@@ -24,4 +24,5 @@ script = ExtResource( 3 )
 one_shot = true
 
 [node name="EditorIndicator" type="Sprite" parent="."]
+scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
