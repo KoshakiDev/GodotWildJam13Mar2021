@@ -13,6 +13,10 @@ onready var module_manager := $ModuleManager
 onready var base_weight := weight
 
 
+func _ready():
+	# Hides the indicator for the player as it is meant for the Godot editor only.
+	$EditorIndicator.hide()
+
 func _physics_process(delta):
 	var hit_ground := test_motion(Vector2.DOWN * 1)
 	

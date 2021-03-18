@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
+[ext_resource path="res://Resources/Art/Player/Modules/Head.png" type="Texture" id=1]
 [ext_resource path="res://Source/Modules/ModuleManager.gd" type="Script" id=3]
 [ext_resource path="res://Source/Entities/Player/Player.gd" type="Script" id=4]
 
@@ -21,3 +22,6 @@ script = ExtResource( 3 )
 
 [node name="EnergyRefillTimer" type="Timer" parent="ModuleManager"]
 one_shot = true
+
+[node name="EditorIndicator" type="Sprite" parent="."]
+texture = ExtResource( 1 )
