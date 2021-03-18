@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Source/Obstacles/Platform.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Source/Levels/DebugLevel.gd" type="Script" id=2]
 [ext_resource path="res://Source/HUD/HUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Source/Entities/Player/Player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Source/HUD/ModuleUI/ModuleUI.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Source/Obstacles/KnockbackArea.tscn" type="PackedScene" id=6]
 
 [node name="DebugLevel" type="Node2D"]
 pause_mode = 1
@@ -82,5 +83,8 @@ pause_mode = 2
 visible = false
 margin_left = 0.0
 margin_right = 0.0
+
+[node name="KnockbackArea" parent="." instance=ExtResource( 6 )]
+position = Vector2( 986.1, 14.9843 )
 
 [editable path="Player"]
