@@ -18,6 +18,7 @@ var selected_connector: Connector
 
 
 onready var viewport := $MarginContainer/ViewportContainer/Viewport
+onready var modules_node: Node2D = $MarginContainer/ViewportContainer/Viewport/Modules
 
 
 func setup(module_manager: ModuleManager) -> void:
@@ -38,7 +39,7 @@ func register_module(module: ModuleContainer) -> void:
 		return
 	
 	modules.append(module)
-	viewport.add_child(module.character_module.module)
+	modules_node.add_child(module.character_module.module)
 	
 	update_connectors(module)
 	
@@ -156,6 +157,6 @@ func remove_module(module: ModuleContainer) -> void:
 		print("Tried to remove non-existent module in character menu: %s" % module.name)
 		return
 	modules.erase(module)
-	viewport.remove_child(module.character_module.module)
+	modules_node.remove_child(module.character_module.module)
 	emit_signal("module_removed", module)
 
