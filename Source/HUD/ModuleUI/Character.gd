@@ -3,8 +3,7 @@ extends VBoxContainer
 
 signal module_registered(module)
 signal module_removed(module)
-signal connector_hovered(connector_type)
-signal connector_unhovered()
+signal connector_hovered(connector_type, hovered)
 
 
 # Array to keep track of all the modules (ModuleContainer) that are in the
@@ -115,13 +114,10 @@ func on_disconnector_toggled(toggled: bool, module: ModuleContainer, connector: 
 		connector.connector_button.pressed = false
 
 func on_connector_hovered(connector: Connector, hovered: float) -> void:
-	# Don't highlight anything, if a module is selected.
-	if selected_module:
-		return
-	if hovered:
-		emit_signal("connector_hovered", connector.connection_type)
-	else:
-		emit_signal("connector_unhovered")
+#	# Don't highlight anything, if a module is selected.
+#	if selected_module:
+#		return
+	emit_signal("connector_hovered", connector.connection_type, hovered)
 
 func on_Inventory_hovered(connector_type: int, hovered: bool) -> void:
 	if selected_connector and selected_connector.connection_type == connector_type:
