@@ -19,6 +19,8 @@ func _ready():
 		printerr("Tried to create module pickup from non pickup: %s" % name)
 	
 	module_container = ModuleContainer.new(module)
+	
+	$AnimationPlayer.play("floating")
 
 
 func pickup():
