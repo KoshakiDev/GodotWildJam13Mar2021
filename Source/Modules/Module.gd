@@ -5,13 +5,16 @@ extends Node2D
 enum Type {
 	Passive,
 	Active,
+	Toggled,
 }
 
 # The weight this module will add to the body
 export var weight: float = 0
 # The amount of energy this module reserves (reduces max_energy of the player).
 export var energy_reserved: float = 0
-# The amount of energy this modules consumes when activated (only for active modules).
+# The amount of energy this modules consumes when activated.
+# For toggled modules this is the amount of energy consumed each second.
+# This only affects Active and Toggled modules.
 export var energy_consumption: float = 0
 
 export(Type) var module_type: int = 0
@@ -32,10 +35,14 @@ var center_position: Position2D
 ## Override functions:
 
 # Called whenever this module should be used (only for active-type modules).
-func use(_event: InputEvent):
+func use(_event: InputEvent) -> void:
 	pass
 
-func physics_process(delta):
+# Called whenerver a toggle-type module is toggled on or off.
+func toggle(_state: bool) -> void:
+	pass
+
+func physics_process(delta) -> void:
 	pass
 
 func setup() -> void:

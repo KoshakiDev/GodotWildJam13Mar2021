@@ -24,6 +24,10 @@ var use_mapping := {}
 # Keeps track of all registered modules (ModuleContainer).
 var modules := []
 
+# Dictionary that tracks modules that are currently draining energy.
+# Keys are the modules, values are the amounts which should be drained.
+var draining_modules := {}
+
 var main_module: ModuleContainer
 
 var _player
@@ -33,14 +37,28 @@ onready var energy_refill_timer := $EnergyRefillTimer
 
 func _unhandled_input(event: InputEvent):
 	# Check if any of the use_mapping actions are pressed.
-	for module in use_mapping:
-		if event.is_action_pressed(use_mapping[module]):
+	for module_container in use_mapping:
+		if event.is_action_pressed(use_mapping[module_container]):
 			# Use the module associated with this action.
-			use_module(module, event)
+			use_module(module_container, event)
 
 func _physics_process(delta):
-	for module in modules:
-		module.world_module.module.physics_process(delta)
+	for module_container in modules:
+		module_container.world_module.module.physics_process(delta)
+
+func _process(delta):
+	for module_container in draining_modules:
+		# Use the energy that should be drained per second (therefor * delta).
+		# Don't start the refill timer so the player instantly refills energy
+		# when touching terrain.
+		use_energy(draining_modules[module_container] * delta, false)
+		# Calculate the energy that will be drained in the next half second.
+		var energy_drain = module_container.energy_consumption / 2
+		# If that energy drain is bigger than the current energy, toggle the
+		# module off.
+		if energy_drain > energy:
+			module_container.world_module.module.toggle(false)
+			draining_modules.erase(module_container)
 
 
 # Sets up the ModuleManager for use. Needs to be called after the player is ready.
@@ -102,9 +120,10 @@ func refill_energy(fill_multiplier := 1.0) -> void:
 		emit_signal("energy_changed", energy, max_energy)
 
 # Reduces energy by amount and emits energy_changed signal.
-func use_energy(amount: float) -> void:
+func use_energy(amount: float, start_refill_cooldown := true) -> void:
 	energy -= amount
-	energy_refill_timer.start(.2)
+	if start_refill_cooldown:
+		energy_refill_timer.start(.2)
 	emit_signal("energy_changed", energy, max_energy)
 
 # Uses the module if it is an active-type module and there is enough energy
@@ -122,5 +141,18 @@ func use_module(module_container: ModuleContainer, event: InputEvent) -> void:
 		else:
 			emit_signal("energy_depleted")
 			print("Not enough energy!")
+	elif module_container.module_type == Module.Type.Toggled:
+		if module_container in draining_modules:
+			# If the module is on, turn it off and remove it from the draining modules.
+			module_container.world_module.module.toggle(false)
+			draining_modules.erase(module_container)
+		else:
+			# You need to have enough energy to sustain the module for one second.
+			var energy_needed = module_container.energy_consumption
+			if energy_needed <= energy:
+				# Toggle the module on.
+				module_container.world_module.module.toggle(true)
+				# Add it to the draining modules.
+				draining_modules[module_container] = energy_needed
 	else:
 		print("Tried to activate non-active module.")
