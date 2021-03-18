@@ -37,14 +37,17 @@ shape = SubResource( 3 )
 [node name="LeftConnectorCollider" type="CollisionShape2D" parent="CollisionBoxes" index="2"]
 position = Vector2( -55, 0 )
 shape = SubResource( 4 )
+disabled = true
 
 [node name="RightConnectorCollider" type="CollisionShape2D" parent="CollisionBoxes" index="3"]
 position = Vector2( 55, -0.1 )
 shape = SubResource( 5 )
+disabled = true
 
 [node name="TopConnectorCollider" type="CollisionShape2D" parent="CollisionBoxes" index="4"]
 position = Vector2( 0, -55 )
 shape = SubResource( 6 )
+disabled = true
 
 [node name="BottomConnector" type="Position2D" parent="Connections" index="0"]
 position = Vector2( 0, 54.5 )
