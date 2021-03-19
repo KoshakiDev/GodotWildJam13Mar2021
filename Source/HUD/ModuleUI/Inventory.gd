@@ -21,17 +21,23 @@ onready var item_grid := $MarginContainer/ScrollContainer/ItemGrid
 
 
 func setup():
-	var thruster := preload("res://Source/Modules/Thruster/SmallThruster.tscn").instance()
-	var thruster_module = ModuleContainer.new(thruster)
-	add_item(thruster_module)
+	Events.connect("module_picked_up", self, "add_item")
 	
-	var anti_grav := preload("res://Source/Modules/GravityNuller/GravityNuller.tscn").instance()
-	var anti_grav_module = ModuleContainer.new(anti_grav)
-	add_item(anti_grav_module)
-	
-	var time_slow := preload("res://Source/Modules/TimeSlower/TimeSlower.tscn").instance()
-	var time_slow_module = ModuleContainer.new(time_slow)
-	add_item(time_slow_module)
+#	var thruster := preload("res://Source/Modules/Thruster/SmallThruster.tscn").instance()
+#	var thruster_container = ModuleContainer.new(thruster)
+#	add_item(thruster_container)
+#
+#	var anti_grav := preload("res://Source/Modules/GravityNuller/GravityNuller.tscn").instance()
+#	var anti_grav_container = ModuleContainer.new(anti_grav)
+#	add_item(anti_grav_container)
+#
+#	var time_slow := preload("res://Source/Modules/TimeSlower/TimeSlower.tscn").instance()
+#	var time_slow_container = ModuleContainer.new(time_slow)
+#	add_item(time_slow_container)
+#
+#	var head := preload("res://Source/Modules/Head/PlayerHead.tscn").instance()
+#	var head_container = ModuleContainer.new(head)
+#	add_item(head_container)
 
 func add_item(module: ModuleContainer):
 	# If the module was already added, readd it to the grid (saves resources).
@@ -63,12 +69,17 @@ func remove_item(module: ModuleContainer):
 	for connector in module.get_connectors():
 		module.get_inventory_connector(connector).delete_connector_button()
 
+func on_Character_hovered(connector_type: int, hovered: bool) -> void:
+	if selected_connector:
+		return
+	highlight_connectors(connector_type, hovered)
+
 # Highlights all connectors of the given type, if active is true, removes the
 # highlight if it is false.
 func highlight_connectors(connector_type: int, active: bool) -> void:
 	for module in modules:
 		for connector in module.get_connectors():
-			if not active or connector.connection_type == connector_type:
+			if connector.connection_type == connector_type:
 				module.get_inventory_connector(connector).set_highlight(active)
 
 func on_Character_module_registered(module: ModuleContainer) -> void:

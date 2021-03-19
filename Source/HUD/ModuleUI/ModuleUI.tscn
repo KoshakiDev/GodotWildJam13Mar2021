@@ -99,6 +99,8 @@ usage = 0
 render_target_update_mode = 3
 script = ExtResource( 7 )
 
+[node name="Modules" type="Node2D" parent="Panel/MarginContainer/HBoxContainer/Character/MarginContainer/ViewportContainer/Viewport"]
+
 [node name="Camera2D" type="Camera2D" parent="Panel/MarginContainer/HBoxContainer/Character/MarginContainer/ViewportContainer/Viewport"]
 current = true
 script = ExtResource( 6 )

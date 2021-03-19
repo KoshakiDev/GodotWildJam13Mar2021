@@ -87,6 +87,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Globals="*res://Source/Autoloads/Globals.gd"
+Events="*res://Source/Autoloads/Events.gd"
 
 [display]
 

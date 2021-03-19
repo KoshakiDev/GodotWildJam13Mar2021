@@ -1,12 +1,12 @@
 extends Module
 
-onready var timer: Timer = $Timer
 
-func use(_event: InputEvent):
-	_body.set_gravity_scale(0.0)
-	timer.start()
-	print("Antigravity")
+export var gravity_scale: float = 0
 
-func _on_Timer_timeout():
-	_body.set_gravity_scale(1.0)
-	print("Gravity back")
+var old_gravity_scale: float
+
+func toggle(active: bool):
+	if active:
+		old_gravity_scale = _body.gravity_scale
+	_body.set_gravity_scale(gravity_scale if active else old_gravity_scale)
+	print("Antigravity toggled")

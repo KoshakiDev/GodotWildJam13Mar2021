@@ -10,9 +10,9 @@ radius = 30.0
 
 [node name="GravityNuller" instance=ExtResource( 4 )]
 script = ExtResource( 1 )
-energy_reserved = 10.0
+weight = 1.0
 energy_consumption = 10.0
-module_type = 1
+module_type = 2
 display_name = "Gravity Nuller"
 use_action = "use_module_4"
 
@@ -31,9 +31,3 @@ connection_type = 1
 
 [node name="CenterPosition" parent="." index="3"]
 position = Vector2( 0, 36 )
-
-[node name="Timer" type="Timer" parent="." index="4"]
-wait_time = 3.0
-one_shot = true
-
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

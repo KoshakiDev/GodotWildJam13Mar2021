@@ -10,8 +10,9 @@ radius = 27.0946
 
 [node name="TimeSlower" instance=ExtResource( 4 )]
 script = ExtResource( 1 )
-energy_consumption = 50.0
-module_type = 1
+weight = 1.0
+energy_consumption = 30.0
+module_type = 2
 display_name = "Time Slower"
 use_action = "use_module_2"
 
@@ -31,8 +32,3 @@ connection_type = 1
 
 [node name="CenterPosition" parent="." index="3"]
 position = Vector2( 0, 32 )
-
-[node name="Timer" type="Timer" parent="." index="4"]
-one_shot = true
-
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
