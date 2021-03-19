@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Source/HUD/ModuleUI/ItemPanel.gd" type="Script" id=1]
-[ext_resource path="res://Resources/Fonts/ModuleStandardFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Resources/Fonts/ModuleStandardFont_2.tres" type="DynamicFont" id=2]
 
 [node name="ItemPanel" type="PanelContainer"]
 margin_top = 350.0
@@ -38,20 +38,20 @@ __meta__ = {
 
 [node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 margin_right = 276.0
-margin_bottom = 34.0
+margin_bottom = 32.0
 custom_fonts/font = ExtResource( 2 )
 text = "Thruster"
 align = 1
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
-margin_top = 39.0
+margin_top = 37.0
 margin_right = 276.0
-margin_bottom = 43.0
+margin_bottom = 41.0
 
 [node name="ViewportContainer" type="ViewportContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 48.0
+margin_top = 46.0
 margin_right = 276.0
-margin_bottom = 298.0
+margin_bottom = 296.0
 rect_min_size = Vector2( 250, 250 )
 stretch = true
 
