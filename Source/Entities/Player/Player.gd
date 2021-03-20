@@ -6,7 +6,11 @@ signal hit_ground()
 signal left_ground()
 
 
+const save_name := "Player.res"
+
+
 var on_ground: bool = false
+var player_save: PlayerSave
 
 
 onready var module_manager := $ModuleManager
@@ -36,7 +40,25 @@ func setup(hud: HUD):
 	
 	connect("hit_ground", module_manager, "refill_energy")
 	
+	# Load the players data on setup.
+	load_data()
+	
 	module_manager.setup(self)
+
+func save_data():
+	if not player_save:
+		player_save = PlayerSave.new()
+	player_save.position = position
+	player_save.rotation = rotation
+	SaveManager.save_data(player_save, save_name)
+
+func load_data():
+	player_save = SaveManager.load_data(save_name)
+	if player_save:
+		position = player_save.position
+		rotation = player_save.rotation
+	else:
+		save_data()
 
 func update_mass(_module):
 	weight = base_weight + module_manager.accumulated_weight

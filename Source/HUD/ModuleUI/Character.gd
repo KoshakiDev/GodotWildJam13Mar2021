@@ -6,6 +6,9 @@ signal module_removed(module)
 signal connector_hovered(connector_type, hovered)
 
 
+
+const save_name := "Character.res"
+
 # Array to keep track of all the modules (ModuleContainer) that are in the
 # character screen.
 var modules := []
@@ -15,6 +18,8 @@ var module_manager: ModuleManager
 
 var selected_module: ModuleContainer
 var selected_connector: Connector
+
+var character_save: CharacterSave
 
 
 onready var viewport := $MarginContainer/ViewportContainer/Viewport
@@ -28,10 +33,57 @@ func setup(module_manager: ModuleManager) -> void:
 		for module_key in modules:
 			module_key.queue_free()
 		modules.clear()
-		print("Cleared modules in Character tab.")
 	
 	for module in module_manager.modules:
 		register_module(module)
+	
+	load_data()
+
+func save_data():
+	if not character_save:
+		character_save = CharacterSave.new()
+	
+	character_save.modules = {}
+	for module in modules:
+		module.save_character_data(character_save)
+	
+	SaveManager.save_data(character_save, save_name)
+
+func load_data():
+	character_save = SaveManager.load_data(save_name)
+	if character_save:
+		load_module(module_manager.main_module, character_save)
+	else:
+		save_data()
+
+func load_module(module_container: ModuleContainer, 
+character_save: CharacterSave, ignore_connector := "") -> void:
+	var connection_save: Dictionary = character_save.modules[module_container.name]
+	# If there are now connections, stop the recursion.
+	if connection_save.empty():
+		return
+	
+	# Go over all connections, create the other module and connect it.
+	# Then load that module.
+	for connector_name in connection_save:
+		# If the connector should be ignored, ignore it. This is used to ignore
+		# the connector the module was created from.
+		if connector_name == ignore_connector:
+			continue
+		
+		var connector_arr = connection_save[connector_name]
+		var other_module = load(connector_arr[0]).instance()
+		var other_container = ModuleContainer.new(other_module)
+		var other_connector_name = connector_arr[1]
+		
+		connect_modules(
+			module_container,
+			module_container.get_connector_by_name(connector_name),
+			other_container,
+			other_container.get_connector_by_name(other_connector_name)
+		)
+		
+		load_module(other_container, character_save, other_connector_name)
 
 func register_module(module: ModuleContainer) -> void:
 	if module in modules:
@@ -47,45 +99,47 @@ func register_module(module: ModuleContainer) -> void:
 
 func on_connector_toggled(toggled: bool, module: ModuleContainer, connector: Connector) -> void:
 	if selected_module and selected_connector and toggled and connector.can_connect(selected_connector):
-		print("Clicked on connector: %s" % connector.name)
-#		print("Connecting %s to %s" % [selected_module.name, module.name])
-		# Connects the selected module (from inventory) with the module that was
-		# pressed in the character tab.
-		register_module(selected_module)
-		module_manager.register_module(selected_module, selected_module.use_action)
-		
-		module.call_deferred("connect_module",
-			connector,
-			selected_module,
-			selected_connector
-		)
-		
-		# Remove the connection buttons from the now connected modules.
-		module.get_character_connector(connector).delete_connector_button()
-		selected_module.get_character_connector(selected_connector).delete_connector_button()
-		
-		selected_module.get_character_connector(selected_connector).generate_connector_button(
-			self,
-			selected_module,
-			"on_disconnector_toggled",
-			"",
-			preload("res://Source/HUD/ModuleUI/DisconnectorButton.tscn")
-		)
-		
+		connect_modules(module, connector, selected_module, selected_connector)
 		# Deselect the selected module, when done, so you can't connect it again.
 		deselect_module()
-	# Only do this, when the button is not being removed.
+		# Only do this, when the button is not being removed.
 	else:
 		# Set the toggle buttons state to be unpressed again (behaves like a normal
 		# button that way)
 		connector.connector_button.pressed = false
+
+func connect_modules(module: ModuleContainer, connector: Connector,
+other_module: ModuleContainer, other_connector: Connector) -> void:
+	if connector.can_connect(other_connector):
+#		print("Connecting %s to %s" % [other_module.name, module.name])
+		# Connects the selected module (from inventory) with the module that was
+		# pressed in the character tab.
+		register_module(other_module)
+		module_manager.register_module(other_module, other_module.use_action)
+		
+		module.call_deferred("connect_module",
+			connector,
+			other_module,
+			other_connector
+		)
+		
+		# Remove the connection buttons from the now connected modules.
+		module.get_character_connector(connector).delete_connector_button()
+		other_module.get_character_connector(other_connector).delete_connector_button()
+		
+		other_module.get_character_connector(other_connector).generate_connector_button(
+			self,
+			other_module,
+			"on_disconnector_toggled",
+			"",
+			preload("res://Source/HUD/ModuleUI/DisconnectorButton.tscn")
+		)
 
 func update_connectors(module: ModuleContainer, no_delete := false) -> void:
 	for connector in module.get_connectors():
 		# If the connector already has a button, dont add a new one.
 		connector = module.get_character_connector(connector)
 		if no_delete and connector.connector_button:
-			print("skipping connector")
 			continue
 		connector.delete_connector_button()
 		if not connector.connected:

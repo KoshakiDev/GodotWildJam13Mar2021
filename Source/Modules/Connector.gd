@@ -39,7 +39,6 @@ func delete_connector_button():
 # hover_callback needs to look like this: hover_callback(connector, hovering)
 func generate_connector_button(node: Node, module_container, toggle_callback := "on_connector_toggled",
 hover_callback := "on_connector_hovered", custom_button_scene: PackedScene = connector_button_scene) -> void:
-	print("Generating connector_button with module: %s" % module_container)
 	self.module_container = module_container
 	connector_button = custom_button_scene.instance()
 	add_child(connector_button)

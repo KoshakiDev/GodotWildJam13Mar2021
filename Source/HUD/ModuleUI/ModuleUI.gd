@@ -18,9 +18,15 @@ func _unhandled_input(event):
 			hide()
 			get_tree().paused = false
 
+func save_data():
+	inventory_menu.save_data()
+	character_menu.save_data()
+
 func setup(player: Player):
 	# Save the player to get it's rotation.
 	_player = player
+	
+	Events.connect("game_save_requested", self, "save_data")
 	
 	# Setup the character and inventory part of the UI.
 	character_menu.setup(player.module_manager)

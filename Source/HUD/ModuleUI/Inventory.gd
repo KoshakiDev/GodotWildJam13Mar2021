@@ -6,6 +6,8 @@ signal module_deselected()
 signal connector_hovered(connector_type, hovered)
 
 
+const save_name := "Inventory.res"
+
 const item_panel_scene := preload("res://Source/HUD/ModuleUI/ItemPanel.tscn")
 
 # Array to keep track of modules that exist in the players inventory.
@@ -16,31 +18,45 @@ var selected_connector: Connector
 
 var stop_connectors: bool = false
 
+var inventory_save: InventorySave
+
 
 onready var item_grid := $MarginContainer/ScrollContainer/ItemGrid
 
 
 func setup():
 	Events.connect("module_picked_up", self, "add_item")
+	load_data()
+
+
+func save_data():
+	if not inventory_save:
+		inventory_save = InventorySave.new()
 	
-#	var thruster := preload("res://Source/Modules/Thruster/SmallThruster.tscn").instance()
-#	var thruster_container = ModuleContainer.new(thruster)
-#	add_item(thruster_container)
-#
-#	var anti_grav := preload("res://Source/Modules/GravityNuller/GravityNuller.tscn").instance()
-#	var anti_grav_container = ModuleContainer.new(anti_grav)
-#	add_item(anti_grav_container)
-#
-#	var time_slow := preload("res://Source/Modules/TimeSlower/TimeSlower.tscn").instance()
-#	var time_slow_container = ModuleContainer.new(time_slow)
-#	add_item(time_slow_container)
-#
-#	var head := preload("res://Source/Modules/Head/PlayerHead.tscn").instance()
-#	var head_container = ModuleContainer.new(head)
-#	add_item(head_container)
+	inventory_save.modules = []
+	for module in modules:
+		# Only add the module to the inventory, if it is in the the inventory and
+		# not just cashed. This is needed, as modules are keept in the modules
+		# array and only removed as a child of the item_grid.
+		if item_grid.is_a_parent_of(modules[module]):
+			inventory_save.modules.append(module.module_scene_path)
+	
+	SaveManager.save_data(inventory_save, save_name)
+
+
+func load_data():
+	inventory_save = SaveManager.load_data(save_name)
+	if inventory_save:
+		for module_path in inventory_save.modules:
+			var module: Module = load(module_path).instance()
+			var module_container = ModuleContainer.new(module)
+			add_item(module_container)
+	else:
+		save_data()
+
 
 func add_item(module: ModuleContainer):
-	# If the module was already added, readd it to the grid (saves resources).
+	# If the module was already added, re-add it to the grid (saves resources).
 	if module in modules:
 		item_grid.add_child(modules[module])
 		add_module_connectors(module)

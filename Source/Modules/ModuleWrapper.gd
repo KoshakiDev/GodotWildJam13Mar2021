@@ -20,14 +20,13 @@ func connect_module(connector: Connector, other_module_wrapper: ModuleWrapper, o
 	assert(other_connector in other_module_wrapper.module.connectors)
 	# Set the position of the other module to connect the two points (the other
 	# module will be repositioned, not this one).
-	print("mgp: %s, cgp: %s, ocgp: %s" % [module.position, connector.position, other_connector.position])
 	other_module_wrapper.reposition(module.position +
 		connector.position - other_connector.position,
 		connector.direction.angle() + other_connector.direction.angle()
 	)
 	connector.connected = true
 	other_connector.connected = true
-	print("Connected %s to %s" % [other_module_wrapper.module.name, module.name])
+	print("Connected %s to %s in wrapper." % [other_module_wrapper.module.name, module.name])
 
 func disconnect_connector(connector: Connector) -> void:
 	connector.connected = false

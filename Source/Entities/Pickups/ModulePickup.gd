@@ -25,8 +25,20 @@ func _ready():
 
 func pickup():
 	Events.emit_signal("module_picked_up", module_container)
+	# Add an entry with this name to the level_save, to delte it when loading.
+	Globals.current_level.level_save.object_data[name] = true
 	queue_free()
 
+func save_data(level_save: LevelSave):
+	# Nothing needs to be done here, as the level_save is modified in the
+	# pickup method. This cannot be done here as the node is deleted.
+	pass
+
+func load_data(level_save: LevelSave):
+	# If there is an entry with this name in the save and it is set to true, delete
+	# this node, as it has already been picked up.
+	if name in level_save.object_data and level_save.object_data[name]:
+		queue_free()
 
 func _on_ModulePickup_body_entered(body):
 	if body is Player:

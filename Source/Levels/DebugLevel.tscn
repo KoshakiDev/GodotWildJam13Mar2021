@@ -80,7 +80,7 @@ gravity_scale = 3.0
 [node name="Objects" type="Node2D" parent="."]
 
 [node name="ModulePickup" parent="Objects" instance=ExtResource( 6 )]
-position = Vector2( 1466.33, 95.8752 )
+position = Vector2( 690.801, 74.6859 )
 module_scene = ExtResource( 7 )
 
 [node name="UILayer" type="CanvasLayer" parent="."]

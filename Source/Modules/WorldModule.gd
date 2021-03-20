@@ -21,7 +21,6 @@ func use(event: InputEvent) -> void:
 	module.use(event)
 
 func connect_module(connector: Connector, other_module: ModuleWrapper, other_connector: Connector) -> void:
-	print("Connecting in world:")
 	.connect_module(connector, other_module, other_connector)
 
 func add_colliders_to(body: RigidBody2D) -> void:
@@ -59,4 +58,3 @@ func set_module(new_module: Module) -> void:
 		module.disconnect("tree_exiting", self, "_on_module_exit_tree")
 	.set_module(new_module)
 	module.connect("tree_exiting", self, "_on_module_exit_tree")
-	print("Set module in world_module")

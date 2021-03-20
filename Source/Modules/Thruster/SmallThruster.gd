@@ -22,4 +22,5 @@ func use(_event: InputEvent):
 	
 	
 	# Play the thrust animation to show the flame of the thruster
+	$AnimationPlayer.stop(true)
 	$AnimationPlayer.play("thrust")

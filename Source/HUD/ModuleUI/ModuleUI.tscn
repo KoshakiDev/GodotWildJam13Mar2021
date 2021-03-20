@@ -10,8 +10,6 @@
 [node name="ModuleUI" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 3.12756
-margin_right = 3.12756
 mouse_filter = 2
 custom_constants/margin_right = 100
 custom_constants/margin_top = 100
@@ -19,6 +17,7 @@ custom_constants/margin_left = 100
 custom_constants/margin_bottom = 100
 script = ExtResource( 1 )
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -92,6 +91,7 @@ mouse_filter = 2
 stretch = true
 
 [node name="Viewport" type="Viewport" parent="Panel/MarginContainer/HBoxContainer/Character/MarginContainer/ViewportContainer"]
+pause_mode = 2
 size = Vector2( 706, 700 )
 handle_input_locally = false
 disable_3d = true
@@ -102,6 +102,7 @@ script = ExtResource( 7 )
 [node name="Modules" type="Node2D" parent="Panel/MarginContainer/HBoxContainer/Character/MarginContainer/ViewportContainer/Viewport"]
 
 [node name="Camera2D" type="Camera2D" parent="Panel/MarginContainer/HBoxContainer/Character/MarginContainer/ViewportContainer/Viewport"]
+pause_mode = 2
 current = true
 script = ExtResource( 6 )
 
@@ -155,4 +156,5 @@ size_flags_horizontal = 5
 custom_constants/vseparation = 50
 custom_constants/hseparation = 50
 columns = 2
+
 [connection signal="size_changed" from="Panel/MarginContainer/HBoxContainer/Character/MarginContainer/ViewportContainer/Viewport" to="Panel/MarginContainer/HBoxContainer/Character/MarginContainer/ViewportContainer/Viewport" method="_on_Viewport_size_changed"]

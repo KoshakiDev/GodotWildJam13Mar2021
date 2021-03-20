@@ -21,7 +21,14 @@ var energy_reserved: float
 
 var module_type: int
 
+var display_name: String
+
 var use_action: String
+
+var module_scene_path: String
+
+var name: String
+
 
 func _init(module: Module) -> void:
 	world_module = WorldModule.new(module)
@@ -32,7 +39,23 @@ func _init(module: Module) -> void:
 	energy_consumption = module.energy_consumption
 	energy_reserved = module.energy_reserved
 	module_type = module.module_type
+	display_name = module.display_name
 	use_action = module.use_action
+	
+	name = module.name
+	module_scene_path = module.filename
+
+# Only used from character to save this modules data.
+func save_character_data(character_save: CharacterSave):
+	var connection_save = {}
+	print(connected_modules)
+	for connector in connected_modules:
+		var connector_arr = connected_modules[connector]
+		connection_save[connector.name] = [
+			connector_arr[0].module_scene_path, # The scene path of the connected module.
+			connector_arr[1].name # The name of the connected module.
+		]
+	character_save.modules[name] = connection_save
 
 # Returns true if a connector from this module and another connector can connect
 # to each other.
@@ -50,6 +73,9 @@ func get_inventory_connector(connector: Connector) -> Connector:
 
 func get_world_connector(connector: Connector) -> Connector:
 	return world_module.module.get_connector_by_name(connector.name)
+
+func get_connector_by_name(name: String) -> Connector:
+	return world_module.module.get_connector_by_name(name)
 
 func connect_module(connector: Connector, other_module: ModuleContainer, other_connector: Connector):
 	if can_connect(connector) and other_module.can_connect(other_connector):
