@@ -1,5 +1,6 @@
 extends Control
 
+const LEVEL_PATH = "res://Source/Levels/Level 1.tscn"
 
 
 func _ready():
@@ -8,7 +9,7 @@ func _ready():
 
 func _on_StartButton_pressed():
 	SaveManager.reset_saves()
-	Globals.change_level(load("res://Source/Levels/Levels/SaveTestLevel.tscn").instance())
+	Globals.change_level(preload(LEVEL_PATH).instance())
 
 
 func _on_ContinueButton_pressed():

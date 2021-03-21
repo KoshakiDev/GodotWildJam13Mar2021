@@ -11,7 +11,7 @@
 [node name="SaveTestLevel" instance=ExtResource( 1 )]
 
 [node name="SpawnPosition" parent="." index="1"]
-position = Vector2( 1288.59, 343.473 )
+position = Vector2( 1288.59, 341.354 )
 
 [node name="Platforms" type="Node2D" parent="." index="2"]
 __meta__ = {
@@ -19,7 +19,7 @@ __meta__ = {
 }
 
 [node name="Platform" parent="Platforms" index="0" instance=ExtResource( 5 )]
-position = Vector2( 731.116, 465.228 )
+position = Vector2( 529.127, 474.667 )
 
 [node name="Platform2" parent="Platforms" index="1" instance=ExtResource( 5 )]
 position = Vector2( 1294.16, 479.483 )
