@@ -15,6 +15,9 @@ var global_save: GlobalSave
 
 
 func _ready():
+	load_data()
+
+func create_objects():
 	player = preload("res://Source/Entities/Player/Player.tscn").instance()
 	hud = preload("res://Source/HUD/HUD.tscn").instance()
 	module_ui = preload("res://Source/HUD/ModuleUI/ModuleUI.tscn").instance()
@@ -30,7 +33,6 @@ func _ready():
 	remove_child(hud)
 	remove_child(module_ui)
 	
-	load_data()
 	Events.connect("game_save_requested", self, "save_data")
 
 func _notification(what):
@@ -72,6 +74,8 @@ func reparent_node(node: Node, new_parent: Node, custom_owner: Node = null) -> v
 		node.set_deferred("owner", new_parent)
 
 func change_level(level: Level):
+	if not player:
+		create_objects()
 	# If there is a current level, save it. It is then loaded in the Level._ready()
 	# function.
 	if current_level:

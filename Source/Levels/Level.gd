@@ -21,7 +21,10 @@ func _ready() -> void:
 	Globals.reparent_node(Globals.hud, ui_layer)
 	Globals.reparent_node(Globals.module_ui, ui_layer)
 	
-	Globals.player.global_position = spawn_position.global_position
+	Globals.player.load_data()
+	
+	if Globals.player.position == Vector2.ZERO:
+		Globals.player.global_position = spawn_position.global_position
 
 func save_data() -> void:
 	if not level_save:
