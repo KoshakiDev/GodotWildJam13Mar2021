@@ -9,6 +9,7 @@ extents = Vector2( 150, 50 )
 [node name="KnockbackArea" type="Area2D"]
 collision_layer = 8
 script = ExtResource( 1 )
+moving_speed = 200
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -19,4 +20,7 @@ position = Vector2( -0.578556, -1.05945 )
 scale = Vector2( 4.55761, 1.52973 )
 texture = ExtResource( 2 )
 
+[node name="Delete" type="Timer" parent="."]
+wait_time = 10.0
 [connection signal="body_entered" from="." to="." method="_on_KnockbackArea_body_entered"]
+[connection signal="timeout" from="Delete" to="." method="_on_Delete_timeout"]
