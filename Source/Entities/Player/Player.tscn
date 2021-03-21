@@ -5,12 +5,12 @@
 [ext_resource path="res://Source/Entities/Player/Player.gd" type="Script" id=4]
 
 [sub_resource type="PhysicsMaterial" id=1]
-bounce = 0.15
 
 [node name="Player" type="RigidBody2D"]
 collision_mask = 2
 mass = 0.75
 physics_material_override = SubResource( 1 )
+gravity_scale = 3.0
 script = ExtResource( 4 )
 
 [node name="Camera2D" type="Camera2D" parent="."]

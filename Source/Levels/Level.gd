@@ -7,25 +7,26 @@ extends Node2D
 # method called with this resource.
 var level_save: LevelSave
 
-onready var hud := $UILayer/HUD
-onready var module_ui := $UILayer/ModuleUI
+onready var ui_layer := $UILayer
 onready var spawn_position := $SpawnPosition
 onready var entities := $Entities
 
-func _ready():
+func _ready() -> void:
 	# If the data could not be loaded, create new level data and save it (both
 	# done by the save method).
-	if not load_data():
-		save_data()
+	load_data()
 	
 	entities.add_child(Globals.player)
-	print(spawn_position.global_position)
-	Globals.player.global_position = spawn_position.global_position
-	Globals.player.setup(hud)
 	
-	module_ui.setup(Globals.player)
+	Globals.reparent_node(Globals.hud, ui_layer)
+	Globals.reparent_node(Globals.module_ui, ui_layer)
+	
+	Globals.player.load_data()
+	
+	if Globals.player.position == Vector2.ZERO:
+		Globals.player.global_position = spawn_position.global_position
 
-func save_data():
+func save_data() -> void:
 	if not level_save:
 		level_save = LevelSave.new()
 	for node in get_tree().get_nodes_in_group("save"):
@@ -34,11 +35,11 @@ func save_data():
 	
 	SaveManager.save_data(level_save, name + ".res")
 
-func load_data() -> bool:
+func load_data() -> void:
 	level_save = SaveManager.load_data(name + ".res")
-	if not level_save:
-		return false
-	for node in get_tree().get_nodes_in_group("save"):
-		if is_a_parent_of(node):
-			node.load_data(level_save)
-	return true
+	if level_save:
+		for node in get_tree().get_nodes_in_group("save"):
+			if is_a_parent_of(node):
+				node.load_data(level_save)
+	else:
+		save_data()

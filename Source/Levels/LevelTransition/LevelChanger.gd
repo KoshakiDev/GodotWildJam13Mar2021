@@ -1,7 +1,7 @@
 extends Area2D
 
 
-export var next_level_scene: PackedScene
+export(String, FILE, "*.tscn") var next_level_scene: String
 
 
 func _ready():
@@ -11,7 +11,7 @@ func _ready():
 
 func _on_LevelChanger_body_entered(body):
 	if body is Player:
-		var next_level = next_level_scene.instance()
+		var next_level = load(next_level_scene).instance()
 		if next_level is Level:
 			Globals.change_level(next_level)
 		else:

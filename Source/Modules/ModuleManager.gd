@@ -60,6 +60,9 @@ func _process(delta):
 			module_container.world_module.module.toggle(false)
 			draining_modules.erase(module_container)
 
+func _ready():
+	# Refill energy initially.
+	refill_energy()
 
 # Sets up the ModuleManager for use. Needs to be called after the player is ready.
 func setup(player) -> void:
@@ -72,9 +75,6 @@ func setup(player) -> void:
 	
 	# Register the modules.
 	register_module(head)
-	
-	# Refill energy initially.
-	refill_energy()
 
 # Registers a module to add its weight, reserved energy and add it's input action.
 # Automatically subtracts those values when the module is freed (see _on_module_removed)
