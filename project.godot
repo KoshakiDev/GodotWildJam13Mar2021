@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Source/Modules/Connector.gd"
 }, {
+"base": "Save",
+"class": "GlobalSave",
+"language": "GDScript",
+"path": "res://Source/Saves/GlobalSave.gd"
+}, {
 "base": "Control",
 "class": "HUD",
 "language": "GDScript",
@@ -98,6 +103,7 @@ _global_script_class_icons={
 "CharacterModule": "",
 "CharacterSave": "",
 "Connector": "",
+"GlobalSave": "",
 "HUD": "",
 "InventoryModule": "",
 "InventorySave": "",
@@ -122,9 +128,9 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Globals="*res://Source/Autoloads/Globals.gd"
 Events="*res://Source/Autoloads/Events.gd"
 SaveManager="*res://Source/Autoloads/SaveManager.gd"
+Globals="*res://Source/Autoloads/Globals.gd"
 
 [display]
 

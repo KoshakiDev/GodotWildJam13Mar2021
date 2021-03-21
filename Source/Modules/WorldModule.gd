@@ -13,9 +13,9 @@ var colliders := []
 func _init(module: Module).(module):
 	pass
 
+
 func setup(body: RigidBody2D) -> void:
 	module._body = body
-	add_colliders_to(body)
 
 func use(event: InputEvent) -> void:
 	module.use(event)
@@ -38,13 +38,15 @@ func add_colliders_to(body: RigidBody2D) -> void:
 			# Reparent the collider to the player (Rigidbody2D).
 			Globals.reparent_node(collider, body)
 
+func _on_module_tree_entered() -> void:
+	add_colliders_to(module._body)
+
 # When the module is removed, also remove it's colliders from the player.
 func _on_module_exit_tree() -> void:
 	if not colliders:
 		return
 	for collider in colliders:
 		Globals.reparent_node(collider, module.get_node("CollisionBoxes"))
-#		collider.queue_free()
 
 func reposition(new_position: Vector2, new_rotation: float):
 	.reposition(new_position, new_rotation)
@@ -56,5 +58,7 @@ func reposition(new_position: Vector2, new_rotation: float):
 func set_module(new_module: Module) -> void:
 	if module:
 		module.disconnect("tree_exiting", self, "_on_module_exit_tree")
+		module.disconnect("tree_entered", self, "_on_module_tree_entered")
 	.set_module(new_module)
 	module.connect("tree_exiting", self, "_on_module_exit_tree")
+	module.connect("tree_entered", self, "_on_module_tree_entered")
