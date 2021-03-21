@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Resources/Art/Level/concrete.jpg" type="Texture" id=1]
+[ext_resource path="res://Source/HUD/ModuleUI/ModuleUI.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Source/HUD/HUD.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Source/Entities/Player/Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Source/Levels/Level.gd" type="Script" id=5]
+[ext_resource path="res://Resources/Art/Level/steel.jpg" type="Texture" id=6]
+[ext_resource path="res://Source/Obstacles/Platform.tscn" type="PackedScene" id=7]
+
+[node name="Level" type="Node2D"]
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+pause_mode = 2
+
+[node name="ModuleUI" parent="UILayer" instance=ExtResource( 2 )]
+visible = false
+
+[node name="HUD" parent="UILayer" instance=ExtResource( 3 )]
+
+[node name="Player" parent="." instance=ExtResource( 4 )]
+position = Vector2( 834.068, 367.897 )
+
+[node name="SpawnPosition" type="Position2D" parent="."]
+position = Vector2( 824.649, -117.313 )
+
+[node name="Entities" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="Area2D2" type="Area2D" parent="Walls"]
+position = Vector2( 0, 5.65686 )
+collision_layer = 2
+
+[node name="Wall" type="Polygon2D" parent="Walls/Area2D2"]
+texture = ExtResource( 1 )
+polygon = PoolVector2Array( 232.017, 242.247, 238.744, 824.147, 1849.9, 827.511, 1853.27, 1089.87, -6.79785, 1089.87, -3.43427, 10.1593, 1812.9, 13.5229, 1822.99, 588.696, 1584.18, 592.06, 1557.19, 250.687 )
+
+[node name="Wall2" type="CollisionPolygon2D" parent="Walls/Area2D2"]
+polygon = PoolVector2Array( 232.017, 242.247, 238.744, 824.147, 1849.9, 827.511, 1853.27, 1089.87, -6.79785, 1089.87, -3.43427, 10.1593, 1812.9, 13.5229, 1822.99, 588.696, 1584.18, 592.06, 1557.19, 250.687 )
+
+[node name="Area2D" type="Area2D" parent="Walls"]
+collision_layer = 2
+
+[node name="Polygon2D" type="Polygon2D" parent="Walls/Area2D"]
+texture = ExtResource( 6 )
+polygon = PoolVector2Array( 652.236, 509.407, 889.556, 507.288, 898.032, 556.023, 707.328, 558.142, 603.501, 558.142 )
+
+[node name="Polygon2D2" type="CollisionPolygon2D" parent="Walls/Area2D"]
+polygon = PoolVector2Array( 652.236, 509.407, 889.556, 507.288, 898.032, 556.023, 707.328, 558.142, 603.501, 558.142 )
+
+[node name="Platform" parent="Walls" instance=ExtResource( 7 )]
+position = Vector2( 1048.25, 597.203 )

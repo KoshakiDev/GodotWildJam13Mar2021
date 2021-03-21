@@ -18,7 +18,7 @@ __meta__ = {
 }
 
 [node name="Platform" parent="Platforms" index="0" instance=ExtResource( 5 )]
-position = Vector2( 731.116, 465.228 )
+position = Vector2( 529.127, 474.667 )
 
 [node name="Platform2" parent="Platforms" index="1" instance=ExtResource( 5 )]
 position = Vector2( 1294.16, 479.483 )
