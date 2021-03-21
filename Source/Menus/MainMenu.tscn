@@ -43,5 +43,6 @@ text = "Continue"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="pressed" from="VBoxContainer/NewButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_ContinueButton_pressed"]
