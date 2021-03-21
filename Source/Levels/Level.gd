@@ -19,6 +19,7 @@ func _ready():
 		save_data()
 	
 	entities.add_child(Globals.player)
+	print(spawn_position.global_position)
 	Globals.player.global_position = spawn_position.global_position
 	Globals.player.setup(hud)
 	
