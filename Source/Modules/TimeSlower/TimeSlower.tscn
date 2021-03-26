@@ -11,7 +11,7 @@ radius = 27.0946
 [node name="TimeSlower" instance=ExtResource( 4 )]
 script = ExtResource( 1 )
 weight = 1.0
-energy_consumption = 30.0
+energy_consumption = 3.0
 module_type = 2
 display_name = "Time Slower"
 use_action = "use_module_2"

@@ -12,13 +12,13 @@ var dragging := false
 # Saves the position where one started dragging
 var drag_start_position := Vector2.ZERO
 
-var zoom_level: float = 1.0 setget set_zoom_level
+var zoom_level: float = .5 setget set_zoom_level
 
 
 onready var tween := $Tween
 
 func _ready():
-	set_zoom_level(.5)
+	zoom = zoom_level * Vector2.ONE
 
 # Needs to be manually called from parent. This is done to make the parent decide
 # when the zooming and dragging should work.
@@ -43,7 +43,7 @@ func _unhandled_input(event):
 
 func set_zoom_level(val: float) -> void:
 	zoom_level = clamp(val, min_zoom, max_zoom)
-	
+	tween.stop_all()
 	tween.interpolate_property(
 		self,
 		"zoom",
