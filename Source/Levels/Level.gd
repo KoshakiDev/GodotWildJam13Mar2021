@@ -14,6 +14,10 @@ onready var entities := $Entities
 func _ready() -> void:
 	# If the data could not be loaded, create new level data and save it (both
 	# done by the save method).
+	if not Globals.current_level:
+		Globals.create_objects()
+		Globals.current_level = self
+	
 	load_data()
 	
 	entities.add_child(Globals.player)
