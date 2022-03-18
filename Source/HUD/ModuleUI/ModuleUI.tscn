@@ -1,11 +1,13 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Source/HUD/ModuleUI/ModuleUI.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Fonts/ModuleTitlesFont_2.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Source/HUD/ModuleUI/ModuleViewportContainer.gd" type="Script" id=3]
 [ext_resource path="res://Source/HUD/ModuleUI/Character.gd" type="Script" id=4]
 [ext_resource path="res://Source/HUD/ModuleUI/Inventory.gd" type="Script" id=5]
 [ext_resource path="res://Source/HUD/ZoomCamera2D.gd" type="Script" id=6]
 [ext_resource path="res://Source/HUD/ModuleUI/Viewport.gd" type="Script" id=7]
+[ext_resource path="res://Source/HUD/ModuleUI/ModulePopup.tscn" type="PackedScene" id=8]
 
 [node name="ModuleUI" type="MarginContainer"]
 visible = false
@@ -90,6 +92,7 @@ margin_right = 746.0
 margin_bottom = 740.0
 mouse_filter = 2
 stretch = true
+script = ExtResource( 3 )
 
 [node name="Viewport" type="Viewport" parent="Panel/MarginContainer/HBoxContainer/Character/MarginContainer/ViewportContainer"]
 pause_mode = 2
@@ -98,6 +101,7 @@ handle_input_locally = false
 disable_3d = true
 usage = 0
 render_target_update_mode = 0
+physics_object_picking = true
 script = ExtResource( 7 )
 
 [node name="Modules" type="Node2D" parent="Panel/MarginContainer/HBoxContainer/Character/MarginContainer/ViewportContainer/Viewport"]
@@ -108,6 +112,8 @@ current = true
 script = ExtResource( 6 )
 
 [node name="Tween" type="Tween" parent="Panel/MarginContainer/HBoxContainer/Character/MarginContainer/ViewportContainer/Viewport/Camera2D"]
+
+[node name="ModulePopup" parent="Panel/MarginContainer/HBoxContainer/Character" instance=ExtResource( 8 )]
 
 [node name="VSeparator" type="VSeparator" parent="Panel/MarginContainer/HBoxContainer"]
 margin_left = 801.0

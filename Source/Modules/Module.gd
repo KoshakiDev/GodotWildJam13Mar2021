@@ -25,12 +25,18 @@ export var display_name: String
 # Temporary! Will be used when this action is pressed.
 export var use_action: String
 
+# Used for in the UI to make modules clickable
+export var mouse_collider: NodePath
+
 
 var connectors := []
 
 var _body: RigidBody2D
 
 var center_position: Position2D
+
+# TODO: remove these as globals and expose functions for their use cases
+onready var character_button := $ModuleCharacterButton
 
 ## Override functions:
 
@@ -48,6 +54,17 @@ func physics_process(delta) -> void:
 func setup() -> void:
 	connectors = $Connections.get_children()
 	center_position = $CenterPosition
+
+func enable_module_character_button() -> void:
+	print("inside tree: %s" % is_inside_tree())
+	if (not mouse_collider):
+		return
+	if $ModuleCharacterButton.get_child_count() == 0:
+		$ModuleCharacterButton.add_child(get_node(mouse_collider).duplicate())
+	$ModuleCharacterButton.input_pickable = true
+
+func disable_module_character_button() -> void:
+	$ModuleCharacterButton.input_pickable = false
 
 # Returns the first match for a connector with the specified direction.
 # Returns null if none are found.

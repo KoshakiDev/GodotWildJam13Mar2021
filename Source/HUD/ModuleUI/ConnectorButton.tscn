@@ -11,6 +11,7 @@ margin_top = -6.23022
 margin_right = 10.4777
 margin_bottom = 5.76978
 focus_mode = 0
+mouse_filter = 1
 theme = ExtResource( 3 )
 custom_styles/hover = ExtResource( 2 )
 custom_styles/pressed = ExtResource( 4 )

@@ -8,6 +8,7 @@ signal connector_hovered(connector_type, hovered)
 
 
 const save_name := "Character.res"
+const module_button_packed := preload("res://Source/HUD/ModuleUI/ModuleCharacterButton.tscn")
 
 # Array to keep track of all the modules (ModuleContainer) that are in the
 # character screen.
@@ -24,6 +25,7 @@ var character_save: CharacterSave
 
 onready var viewport := $MarginContainer/ViewportContainer/Viewport
 onready var modules_node: Node2D = $MarginContainer/ViewportContainer/Viewport/Modules
+onready var module_popup := $ModulePopup
 
 
 func setup(module_manager: ModuleManager) -> void:
@@ -95,7 +97,24 @@ func register_module(module: ModuleContainer) -> void:
 	
 	update_connectors(module)
 	
+	# TODO: use function calls for these
+	module.character_module.module.character_button.connect("module_pressed", self, "open_module_menu", [module])
+	
 	emit_signal("module_registered", module)
+
+func remove_module(module: ModuleContainer) -> void:
+	if not module in modules:
+		print("Tried to remove non-existent module in character menu: %s" % module.name)
+		return
+	modules.erase(module)
+	modules_node.remove_child(module.character_module.module)
+	emit_signal("module_removed", module)
+
+# TODO: make this work
+func open_module_menu(module: ModuleContainer) -> void:
+	module_popup.set_module(module)
+	module_popup.popup_centered()
+	print("Opened menu: %s" % module.name)
 
 func on_connector_toggled(toggled: bool, module: ModuleContainer, connector: Connector) -> void:
 	if selected_module and selected_connector and toggled and connector.can_connect(selected_connector):
@@ -205,12 +224,4 @@ func deselect_module() -> void:
 	# Unset the selected module and connector.
 	selected_module = null
 	selected_connector = null
-
-func remove_module(module: ModuleContainer) -> void:
-	if not module in modules:
-		print("Tried to remove non-existent module in character menu: %s" % module.name)
-		return
-	modules.erase(module)
-	modules_node.remove_child(module.character_module.module)
-	emit_signal("module_removed", module)
 
