@@ -47,8 +47,9 @@ module_type = 1
 display_name = "Small Thruster"
 use_action = "use_module_1"
 thrust_force = 500
+linear_clamp = 200
 
-[node name="ThrusterSprite" type="Sprite" parent="." index="0"]
+[node name="Sprite" type="Sprite" parent="." index="0"]
 position = Vector2( 1, 32 )
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 3 )

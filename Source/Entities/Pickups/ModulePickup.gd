@@ -20,6 +20,9 @@ func _ready():
 	
 	module_container = ModuleContainer.new(module)
 	
+	if module.has_node("Sprite"):
+		$Sprite.texture = module.get_node("Sprite").texture
+	
 	$AnimationPlayer.play("floating")
 
 
