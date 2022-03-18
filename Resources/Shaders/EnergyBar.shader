@@ -1,7 +1,7 @@
 shader_type canvas_item;
 
-uniform float offset : hint_range(0f, 1f) = 0.0;
+uniform float offset : hint_range(0.0, 1.0) = 0.0;
 void vertex() {
-	VERTEX.y += sin(TIME * 50f) * (10f * offset);
-	VERTEX.x += cos(TIME * 40f) * (5f * offset);
+	VERTEX.y += sin(TIME * 50.0) * (10.0 * offset);
+	VERTEX.x += cos(TIME * 40.0) * (5.0 * offset);
 }

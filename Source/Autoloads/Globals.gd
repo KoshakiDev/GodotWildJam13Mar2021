@@ -88,8 +88,8 @@ func change_level(level: Level):
 			hud.get_parent().remove_child(hud)
 		if current_level.is_a_parent_of(module_ui):
 			module_ui.get_parent().remove_child(module_ui)
-	change_scene(level)
 	current_level = level
+	change_scene(level)
 
 func change_scene(new_scene : Node):
 	var root = get_tree().get_root()
