@@ -161,9 +161,6 @@ margin_right = 2297.9
 margin_bottom = -2106.03
 custom_fonts/font = ExtResource( 2 )
 text = "I feel sluggish..."
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label10" type="Label" parent="Walls"]
 margin_left = -8490.3

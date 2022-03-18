@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Source/Entities/Pickups/ModulePickup.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://godot.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )
@@ -35,9 +35,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, -10 ), Vector2( 0, 0 ), Vector2( 0, 10 ) ]
 }
 
-[node name="ModulePickup" type="Area2D" groups=[
-"save",
-]]
+[node name="ModulePickup" type="Area2D" groups=["save"]]
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
